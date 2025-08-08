@@ -11,7 +11,7 @@ Same as all Springboot projects, the testing codes can be found as below:
                 test/java/
                     com/example/testcontainer1/
                                    unit/         # unit testing by Mockito
-                                   integration/  # integration testing by PostgresSQL testcontainer
+                                   integration/  # integration testing by PostgreSQL testcontainer
                                    
 ```
 

@@ -8,8 +8,8 @@ Unit test cases can give a developer quick run to confirm that a behavior is exp
 Same as all Springboot projects, the testing codes can be found as below:
 ```requirements
 <project_root>/
-                test/
-                    com.example.testcontainer1/
+                test/java/
+                    com/example/testcontainer1/
                                    unit/         # unit testing by Mockito
                                    integration/  # integration testing by PostgresSQL testcontainer
                                    

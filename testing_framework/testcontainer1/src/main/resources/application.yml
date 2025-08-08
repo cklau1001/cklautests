@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: testcontainer1
+
+  sql:
+    init:
+      mode: always
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/testdb1?schema=testdb1_schema
+    username: postgres
+    password: <deleted>
+    driverClassName: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+
+logging:
+  level:
+    root: INFO
+    com:
+      example: INFO

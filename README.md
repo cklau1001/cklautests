@@ -2,7 +2,7 @@
 The repository is set up to capture all cool stuff that I have learnt. Hopefully, it can also give you some insight when you are stuck during your technology journey.  :-)
 
 # Directory Structure
-```requirements
+```shell
 <root>/
          dsa/     # java / python codes for different algorithm problems
          testing_framework/   # sample codes to perform unit and integration testing using popular tools e.g. Mockito / TestContainers

@@ -21,4 +21,10 @@ jobs:
           ls ${{ github.workspace }}
           echo " "
           ls ${{ github.workspace }}/dsa/java
+      - name: Set up JDK 24
+        uses: actions/setup-java@v4
+        with:
+          java-version: '24'
+          distribution: 'oracle'
+      - run: java -version
       - run: echo "Job status is ${{ job.status }}"

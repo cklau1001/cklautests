@@ -6,7 +6,6 @@ import java.util.*;
 46 - permutation
 https://leetcode.com/problems/permutations/description/
 
-
 47 - permutation 2
 https://leetcode.com/problems/permutations-ii/description/
 

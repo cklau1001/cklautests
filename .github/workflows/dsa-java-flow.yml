@@ -12,6 +12,9 @@ jobs:
       - run: echo "Runner=${{ runner.os }}, branch=${{ github.ref }}, repo=${{ github.repository }}"
       - name: Check out code
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            dsa/java
       - run: echo "Code checked out"
       - name: Listing files
         run: |

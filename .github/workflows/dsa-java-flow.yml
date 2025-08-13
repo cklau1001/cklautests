@@ -26,5 +26,9 @@ jobs:
         with:
           java-version: '24'
           distribution: 'oracle'
+          cache: maven
       - run: java -version
+      - name: Build with Maven
+        working-directory: ./dsa/java
+        run: mvn compile
       - run: echo "Job status is ${{ job.status }}"

@@ -13,8 +13,7 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
         with:
-          sparse-checkout: |
-            dsa/java
+          sparse-checkout: 'dsa/java'
           sparse-checkout-cone-mode: false
       - run: echo "Code checked out"
       - name: Listing files

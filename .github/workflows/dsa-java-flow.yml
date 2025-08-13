@@ -10,7 +10,7 @@ jobs:
     steps:
       - run: echo "DSA Java workflow triggered by ${{ github.event_name }} event."
       - run: echo "Runner=${{ runner.os }}, branch=${{ github.ref }}, repo=${{ github.repository }}"
-      - name: Check out code
+      - name: Check out code on dsa/java
         uses: actions/checkout@v4
         with:
           sparse-checkout: 'dsa/java'
@@ -19,4 +19,6 @@ jobs:
       - name: Listing files
         run: |
           ls ${{ github.workspace }}
+          echo " "
+          ls ${{ github.workspace }}/dsa/java
       - run: echo "Job status is ${{ job.status }}"

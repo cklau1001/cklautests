@@ -1,0 +1,36 @@
+name: DSA Python workflow
+run-name: ${{ github.actor }}
+on:
+  push:
+    paths:
+      - dsa/python/**
+env:
+  CHECKOUT_PATH: 'dsa/python'
+
+jobs:
+  init-workflow:
+    runs-on: ubuntu-latest
+    outputs:
+      checkout_path: ${{ steps.init_checkout_path.outputs.checkout_path }}
+    steps:
+      - name: Initialize CHECKOUT_PATH
+        id: init_checkout_path
+        run: echo "checkout_path=$CHECKOUT_PATH" >> $GITHUB_OUTPUT
+
+  dsa-python-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "DSA Python workflow triggered by ${{ github.event_name }} event."
+      - run: echo "Runner=${{ runner.os }}, branch=${{ github.ref }}, repo=${{ github.repository }}"
+      - name: Check out code on ${{ env.CHECKOUT_PATH }}
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: ${{ env.CHECKOUT_PATH }}
+          sparse-checkout-cone-mode: false
+      - run: echo "Code checked out"
+      - name: Listing files
+        run: |
+          ls ${{ github.workspace }}
+          echo " "
+          ls ${{ github.workspace }}/$CHECKOUT_PATH
+      - run: echo "Job status is ${{ job.status }}"

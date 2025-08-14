@@ -45,6 +45,9 @@ jobs:
         run: mvn compile
 
   java-lint:
+    permissions:
+      contents: write
+      statuses: write
     uses: ./.github/workflows/linter-java-subflow.yml
     with:
       checkout_path: ${{ needs.init-workflow.outputs.checkout_path }}

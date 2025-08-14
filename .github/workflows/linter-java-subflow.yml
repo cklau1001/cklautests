@@ -7,9 +7,6 @@ on:
         required: true
         type: string
 
-# permissions:
-#  contents: read
-
 jobs:
   perform_java_lint:
     permissions:

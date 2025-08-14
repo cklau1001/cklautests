@@ -24,6 +24,13 @@ https://leetcode.com/problems/palindrome-partitioning/description/
  */
 public class Subset {
 
+    /**
+     * Derive all possible subset of numbers from input
+     *   array using a recursive approach.
+     *
+     * @param nums - a list of input numbers
+     * @return - a list of subsets consisting of various combination of numbers
+     */
     public List<List<Integer>> subsetsByRec(int[] nums) {
         /*
 
@@ -53,12 +60,22 @@ public class Subset {
 
         List<Integer> path = new ArrayList<>();
         List<List<Integer>> result = new ArrayList<>();
-        DFS(nums, 0, path, result);
+        runDFS(nums, 0, path, result);
 
         return result;
     }
 
-    public void DFS(int[] nums, int pos, List<Integer> path, List<List<Integer>> result) {
+    /**
+     * Execute the recursive function to derive all possible subset of numbers
+     *    in a depth-first-search manner (DFS).
+     *
+     * @param nums - input array of numbers
+     * @param pos - current position of the numbers in the array
+     * @param path - current combination of numbers forming the subset
+     * @param result - current list of results
+     */
+    public void runDFS(int[] nums, int pos, List<Integer> path,
+                       List<List<Integer>> result) {
         /*
            nums: [1,2]
                                             path
@@ -71,42 +88,53 @@ public class Subset {
          */
         if (pos == nums.length) {
             /*
-               we only store the result when transversing to the last element, which is backtracking.
+               we only store the result when transversing to the last element,
+                  which is backtracking.
+               To workaround call-by-reference,
+                need to create a new copy (defensive copy)
              */
-            result.add(new ArrayList<>(path));   // to workaround call-by-reference, need to create a new copy (defensive copy)
+            result.add(new ArrayList<>(path));
             return;
         }
 
         // take-it
         path.addLast(nums[pos]);           // this is a LIFO stack operation
-        DFS(nums, pos+1, path, result);
+        runDFS(nums, pos + 1, path, result);
 
         // skip-it
-        /* this is a LIFO stack operation, remove() will remove at pos, not the target value
-           better to use removeLast()
+        /* this is a LIFO stack operation, remove() will remove at pos, not the
+           target value better to use removeLast()
          */
         path.removeLast();
-        DFS(nums, pos+1, path, result);
+        runDFS(nums, pos + 1, path, result);
 
     }
 
+    /**
+     * Get all possible subsets of numbers from input array using a
+     *   bit-wise manipulation.
+     *
+     * @param nums - the input array
+     * @return - a list of all possible subsets of numbers from the input array
+     */
     public List<List<Integer>> subsetsByBit(int[] nums) {
 
         /*
-          a bit manipulation is a smart way to construct all combination in a brute force manner.
+          a bit manipulation is a smart way to construct all combination in a
+          brute force manner.
           nums = [1, 2, 3]
            for any matched entry, e.g. [1,3] =>  0x1 0 1
 
-              How to translate a bitmap into target entry of nums by shifting 1 to right
-              ----------------------------------------------------------------------------
-              i=5 (0x101) and j=0, 0x000) => 1   => shift 0 times of 1 to right => num[0] = 1
-              i=5 (0x101) and j=2, 0x200) => 3   => shift 2 times of 1 to right => num[2] = 3
+How to translate a bitmap into target entry of nums by shifting 1 to right
+----------------------------------------------------------------------------
+i=5 (0x101) and j=0, 0x000) => 1   => shift 0 times of 1 to right => num[0] = 1
+i=5 (0x101) and j=2, 0x200) => 3   => shift 2 times of 1 to right => num[2] = 3
          */
         List<List<Integer>> result = new ArrayList<>();
 
-        for (int i=0; i < (1 << nums.length); i++) {
+        for (int i = 0; i < (1 << nums.length); i++) {
             List<Integer> path = new ArrayList<>();
-            for (int j=0; j < nums.length; j++) {
+            for (int j = 0; j < nums.length; j++) {
                 int shiftR = i >> j;
                 if ((shiftR & 1) == 1) {
                     path.add(nums[j]);
@@ -118,17 +146,25 @@ public class Subset {
         return result;
     }
 
+    /**
+     * Return the list of subset of numbers from the input array
+     *   that can contain duplicate numbers using a recusrive approach.
+     * @param nums - input array of numbers
+     * @return - return a list of subset of numbers from the array
+     */
     public List<List<Integer>> subsets2WithDup(int[] nums) {
         /*
 
         90 - nums can have duplicate
         https://leetcode.com/problems/subsets-ii/description/
 
-       we only want to include [], [2,2], [2,2,2],.... once from bitwise perspective, it will be
+       we only want to include [], [2,2], [2,2,2],....
+       once from bitwise perspective, it will be
        accepted -> 0x0000, 0x1000, 0x1100, 0x1110, 0x1111
        not accepted -> 0x0100, 0x0010, 0x0001, etc
 
-       the add-it side can help us include the accepted combination. The skip-it side needs to move to next non-repeating characters.
+       the add-it side can help us include the accepted combination.
+       The skip-it side needs to move to next non-repeating characters.
 
 [1,2,2,3]
 
@@ -174,12 +210,21 @@ public class Subset {
         Arrays.sort(nums);
         List<Integer> path = new ArrayList<>();
         List<List<Integer>> result = new ArrayList<>();
-        DFS2(nums, 0, path, result);
+        runDFS2(nums, 0, path, result);
 
         return result;
     }
 
-    public void DFS2(int[] nums, int pos, List<Integer> path, List<List<Integer>> result) {
+    /**
+     * Derive the subset of numbers from the input array that
+     *   can deal with duplicate numbers.
+     * @param nums  - input array of numbers
+     * @param pos   - current position of numbers in nums
+     * @param path  - current combination of numbers
+     * @param result  - the list of subset of numbers
+     */
+    public void runDFS2(int[] nums, int pos, List<Integer> path,
+                        List<List<Integer>> result) {
 
         if (pos == nums.length) {
             result.add(new ArrayList<>(path));
@@ -188,7 +233,7 @@ public class Subset {
 
         // add-it
         path.addLast(nums[pos]);
-        DFS2(nums, pos + 1, path, result);
+        runDFS2(nums, pos + 1, path, result);
 
         // skip-it
         path.removeLast();
@@ -200,14 +245,19 @@ public class Subset {
             k++;
         }
 
-        DFS2(nums, k, path, result);
+        runDFS2(nums, k, path, result);
 
     }
 
+    /**
+     * The entry point of the program.
+     *
+     * @param args  - input argument
+     */
     public static void main(String[] args) {
 
-        int[] input = new int[] {1,2,2};
-        List<List<Integer>> result = null;
+        int[] input = new int[] {1, 2, 2};
+        List<List<Integer>> result;
 
         Subset st = new Subset();
         // result = st.subsetsByRec(input);

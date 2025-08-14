@@ -1,6 +1,13 @@
 package org.cklautests.dsa.dp;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.HashSet;
 
 /*
 
@@ -31,25 +38,41 @@ input [0,1,2], size = 3
        [2,1,0]
 
  */
+
 public class Permutation {
 
-    public List<List<Integer>> permutateByRec(int[] nums) {
+    /**
+     * Find all possible combination by a recursive call.
+     *
+     * @param nums - Input list of numbers
+     * @return List<List<Integer>>
+     */
+    public List<List<Integer>> permutateByRec(final int[] nums) {
 
         /*
           leverage a visited array to mark which entry has been used
-          reset the visited entry and remove the lastly added number so that it can be picked up again in different order
-          in next iteration.
+          reset the visited entry and remove the lastly added number so that
+          it can be picked up again in different order in next iteration.
          */
         boolean[] visited = new boolean[nums.length];
         List<Integer> path = new ArrayList<>();
         List<List<Integer>> result = new ArrayList<>();
 
-        DFS(nums, 0, visited, path, result);
+        runDFS(nums, 0, visited, path, result);
 
         return result;
     }
 
-    public void DFS(int[] nums, int pos, boolean[] visited, List<Integer> path, List<List<Integer>> result) {
+    /**
+     *  Find all combination by a recursive call.
+      * @param nums - input list of numbers
+     * @param pos - current position
+     * @param visited - has the number been visited
+     * @param path - current combination of numbers
+     * @param result - current list of combination of numbers
+     */
+    public void runDFS(final int[] nums, int pos, boolean[] visited,
+                       List<Integer> path, List<List<Integer>> result) {
 
         if (pos == nums.length) {
             result.add(new ArrayList<>(path));
@@ -61,33 +84,49 @@ public class Permutation {
             }
             visited[i] = true;
             path.add(nums[i]);
-            DFS(nums, pos + 1, visited, path, result);
+            runDFS(nums, pos + 1, visited, path, result);
             path.removeLast();  // remove last added number for next iteration
-            visited[i] = false;   // reset last visited number for next iteration to pick up in different order
+            // reset last visited number for next iteration to pick up in
+            // different order
+            visited[i] = false;
         }
 
     }
 
-    public List<List<Integer>> permutateBySwap(int[] nums) {
+    /**
+     * Derive all combination by swaping the two adjacent numbers.
+     * @param nums - input parameter
+     * @return List of different combination of numbers.
+     */
+    public List<List<Integer>> permutateBySwap(final int[] nums) {
         /*
-           strictly speaking, in each iteration, two paths are taken, either keep the same order or swap the order
-           leverage this feature to compute all permutation
+           strictly speaking, in each iteration, two paths are taken, either
+           keep the same order or swap the order leverage this feature to
+           compute all permutation
          */
 
-
-        List<Integer> path = new ArrayList<>();    // need to build a mutable list, toList() can only return an immutable list
+        // need to build a mutable list, toList() can only return an
+        // immutable list
+        List<Integer> path = new ArrayList<>();
         for (int n: nums) {
             path.add(n);
         }
 
         List<List<Integer>> result = new ArrayList<>();
-        DFSswap(0, path, result);
+        runDFSswap(0, path, result);
 
         return result;
 
     }
 
-    public void DFSswap(int pos, List<Integer> path, List<List<Integer>> result) {
+    /**
+     * Perform swapping of adjacent numbers.
+     * @param pos - current position of the numbers
+     * @param path - current combination of numbers
+     * @param result - current list of combination of numbers
+     */
+    public void runDFSswap(int pos, List<Integer> path,
+                           List<List<Integer>> result) {
 
         /*
             [0,1,2]
@@ -110,15 +149,21 @@ public class Permutation {
             return;
         }
 
-        for (int i=pos; i < path.size(); i++) {
+        for (int i = pos; i < path.size(); i++) {
             Collections.swap(path, pos, i);
-            DFSswap(pos+1, path, result);
+            runDFSswap(pos + 1, path, result);
             Collections.swap(path, pos, i);
 
         }
     }
 
-    public List<List<Integer>> permuteUnique47(int[] nums) {
+    /**
+     * Find all combination numbers if the input nums can have
+     *  duplicate numbers.
+     * @param nums - list of input numbers
+     * @return - a list of unique combination of numbers
+     */
+    public List<List<Integer>> permuteUnique47(final int[] nums) {
         /*
 
         47
@@ -136,7 +181,9 @@ public class Permutation {
 
          */
         Arrays.sort(nums);
-        List<Integer> path = new ArrayList<>();    // need to build a mutable list, toList() can only return an immutable list
+        // need to build a mutable list, toList() can only return an
+        // immutable list
+        List<Integer> path = new ArrayList<>();
         List<Integer> pathMap = new ArrayList<>();
         Map<Integer, Integer> freqMap = new HashMap<>();
         for (int n: nums) {
@@ -147,13 +194,22 @@ public class Permutation {
         boolean[] visited = new boolean[nums.length];
         Set<List<Integer>> set = new HashSet<>();
         List<List<Integer>> result = new ArrayList<>();
-        DFSUniqueSwap(0, path, result, set);
+        runDFSUniqueSwap(0, path, result, set);
         // DFSUniqueSwap2(nums.length, freqMap, pathMap, result);
         return result;
 
     }
 
-    public void DFSUniqueSwap(int pos, List<Integer> path, List<List<Integer>> result, Set<List<Integer>> set) {
+    /**
+     * Perform swapping of two unique numbers.
+     * @param pos - current position
+     * @param path - current combination of numbers
+     * @param result - current list of unique combination of numbers
+     * @param set - a set of unique combination
+     */
+    public void runDFSUniqueSwap(int pos, List<Integer> path,
+                                 List<List<Integer>> result,
+                                 Set<List<Integer>> set) {
 
         /*
            Not an efficient approach as duplicate computation is needed.
@@ -181,18 +237,30 @@ public class Permutation {
             }
         }
 
-        for (int i=pos; i < path.size(); i++) {
+        for (int i = pos; i < path.size(); i++) {
             Collections.swap(path, pos, i);
-            DFSUniqueSwap(pos+1, path, result, set);
+            runDFSUniqueSwap(pos + 1, path, result, set);
             Collections.swap(path, pos, i);
 
         }
     }
 
-    public void DFSUniqueSwap2(int numlength, Map<Integer, Integer> freqMap, List<Integer> path, List<List<Integer>> result) {
+    /**
+     * alternate approach to derive all unique combination of numbers by firstly
+     * setting up a frequency map for each unique numbers.
+     *
+     * @param numlength - current length of the combination of numbers
+     * @param freqMap - frequency map of occurence of each number
+     * @param path - current working copy of numbers
+     * @param result - current list of unique combination of numbers
+     */
+    public void runDFSUniqueSwap2(int numlength, Map<Integer, Integer> freqMap,
+                                  List<Integer> path,
+                                  List<List<Integer>> result) {
 
         /*
-        Use a frequency map to capture frequency of each result, which can also avoid duplicate
+        Use a frequency map to capture frequency of each result,
+          which can also avoid duplicate
 
           [0,1,1,2]    => freqMap = { 0:1 / 1:2 / 2:1 }
 
@@ -200,7 +268,7 @@ public class Permutation {
              [0,1,1,2]
 
          */
-        if (path.size() == numlength ) {
+        if (path.size() == numlength) {
             result.add(new ArrayList<>(path));
             return;
         }
@@ -211,7 +279,7 @@ public class Permutation {
                 path.add(key);
                 count--;
                 freqMap.put(key, count);
-                DFSUniqueSwap2(numlength, freqMap, path, result);
+                runDFSUniqueSwap2(numlength, freqMap, path, result);
                 path.removeLast();
                 count++;
                 freqMap.put(key, count);
@@ -220,9 +288,13 @@ public class Permutation {
 
     }
 
+    /**
+     * Entry point of the program.
+     * @param args - command line argument
+     */
     public static void main(String[] args) {
 
-        int[] input = new int[]{1,1,2};
+        int[] input = new int[]{1, 1, 2};
         List<List<Integer>> result;
 
         Permutation p1 = new Permutation();

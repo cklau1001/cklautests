@@ -10,10 +10,12 @@ env:
 jobs:
   init-workflow:
     runs-on: ubuntu-latest
-    steps:
-      - run: echo "null"
     outputs:
-      checkout_path: ${{ env.CHECKOUT_PATH }}
+      checkout_path: ${{ steps.init_checkout_path.outputs.checkout_path }}
+    steps:
+      - name: Initialize CHECKOUT_PATH
+        id: init_checkout_path
+      - run: echo "checkout_path=$CHECKOUT_PATH" >> $GITHUB_OUTPUT
 
   dsa-java-workflow:
     runs-on: ubuntu-latest

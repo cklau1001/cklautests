@@ -1,0 +1,16 @@
+name: Main workflow
+run-name: ${{ github.actor }}
+on: [push]
+jobs:
+  main-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "main workflow triggered by ${{ github.event_name }} event."
+      - run: echo "Runner=${{ runner.os }}, branch=${{ github.ref }}, repo=${{ github.repository }}"
+      - name: Check out code
+        uses: actions/checkout@v4
+      - run: echo "Code checked out"
+      - name: Listing files
+        run: |
+             ls ${{ github.workspace }}
+      - run: echo "Job status is ${{ job.status }}"

@@ -1,7 +1,4 @@
-package dsa.linkedlist;
-
-import java.util.List;
-import java.util.Objects;
+package org.cklautests.dsa.linkedlist;
 
 /*
 
@@ -13,16 +10,22 @@ This shows how to use fast and slow pointers to get the middle of a linked list.
 public class FindMiddleLinkedList {
 
     private static class ListNode {
+        /**
+         * The next node of the current node.
+         */
         private ListNode next;
+        /**
+         * The value of the current node.
+         */
         private int val;
 
-        ListNode() {}
-        ListNode(int val) {
-            this.val = val;
+        ListNode() { }
+        ListNode(int ival) {
+            this.val = ival;
         }
-        ListNode(int val, ListNode next) {
-            this.val = val;
-            this.next = next;
+        ListNode(int ival, ListNode inext) {
+            this.val = ival;
+            this.next = inext;
         }
 
     } // class - ListNode
@@ -74,6 +77,12 @@ public class FindMiddleLinkedList {
 
     }
 
+    /**
+     * To move a node k steps to the right.
+     *
+     * @param head - head of the node
+     * @param k - the number of right positions
+     */
     public void rotateRight(ListNode head, int k) {
 
         /*
@@ -118,13 +127,21 @@ public class FindMiddleLinkedList {
         printNodes(head);
     }
 
+    /**
+     * Find the node that two lists intersects.
+     *
+     * @param headA - First list
+     * @param headB - Second list
+     * @return - the intersecting node of both lists
+     */
     private ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 
         /*
-        160
-        https://leetcode.com/problems/intersection-of-two-linked-lists/description/
+ 160
+ https://leetcode.com/problems/intersection-of-two-linked-lists/description/
 
-        If an intersection node is found, both headA and headB transverse the same distance.
+    If an intersection node is found,
+      both headA and headB transverse the same distance.
 
         lenA + lenB + X == lenB + lenA + X
         => implying that X can be any value from positive to negative
@@ -133,10 +150,10 @@ public class FindMiddleLinkedList {
 
          4 -> 5  ^
 
-        1 -> 2 -> 10 -> 3  *   A reach node(3) at 4, 7   : B reach node(3) at 3, 7
+1 -> 2 -> 10 -> 3  *   A reach node(3) at 4, 7   : B reach node(3) at 3, 7
          4 -> 5  ^
 
-        1 -> 2 -> 10 -> 11 -> 3  *   A reach node(3) at 5, 8   : B reach node(3) at 3, 8
+1 -> 2 -> 10 -> 11 -> 3  *   A reach node(3) at 5, 8   : B reach node(3) at 3, 8
          4 -> 5  ^
                    if interNode at tail, steps moved = lenA + lenB
          */
@@ -145,8 +162,8 @@ public class FindMiddleLinkedList {
         ListNode nodeB = headB;
 
         while (nodeA != nodeB) {
-            nodeA = ( nodeA == null ) ? headB : nodeA.next;
-            nodeB = ( nodeB == null ) ? headA : nodeB.next;
+            nodeA = (nodeA == null) ? headB : nodeA.next;
+            nodeB = (nodeB == null) ? headA : nodeB.next;
         }
 
         int value = nodeA == null ? -1 : nodeA.val;
@@ -158,7 +175,7 @@ public class FindMiddleLinkedList {
     private void removeNthNodeFromEnd(ListNode head, int n) {
 
         /*
-        https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/
+ https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/
 
         Idea
 
@@ -183,7 +200,7 @@ public class FindMiddleLinkedList {
         ListNode slow = head;
 
         // fast forward head to n steps
-        for (int i=0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             fast = fast.next;
             if (fast == null) {
                 break;
@@ -191,11 +208,13 @@ public class FindMiddleLinkedList {
         }
 
         if (fast == null) {
-            System.out.printf("WARN: Step n=%s longer than the length of the list %n", n);
+            System.out.printf("WARN: Step n=%s longer than "
+                    + "the length of the list %n", n);
             return;
         }
         // move both fast and slow together and stop when fast reaches the end
-        // we need to stop at a node before the deleted node, so the condition is fast.next instead of fast != null
+        // we need to stop at a node before the deleted node,
+        // so the condition is fast.next instead of fast != null
         while (fast.next != null) {
             fast = fast.next;
             slow = slow.next;
@@ -226,18 +245,16 @@ public class FindMiddleLinkedList {
                s.next = f
 
 
-           dummy       current         current(next)    current(nextnext)   firstNode    secondNode
-           null        head(1)         2                3                   2             3
-
-
          */
 
         if (head == null || head.next == null) {
             return;
         }
 
-        ListNode prevNode = new ListNode(), nextNode, currentNode;
-        ListNode firstNode, secondNode;
+        ListNode prevNode = new ListNode();
+        ListNode currentNode;
+        ListNode firstNode;
+        ListNode secondNode;
 
         prevNode.next = head;
         currentNode = prevNode;
@@ -260,7 +277,8 @@ public class FindMiddleLinkedList {
             currentNode.next = secondNode;         // update C(0).next to N(2)
             secondNode.next = firstNode;           // update N(2).next to N(1)
 
-            currentNode = firstNode;          // C(0)->N(2)->N(1)->N(3)->N(4) : currentNode = N(1)
+            // C(0)->N(2)->N(1)->N(3)->N(4) : currentNode = N(1)
+            currentNode = firstNode;
             // So, C moves from 0 to 1 ( two steps )
             // 2nd iteration
             // C(0)->N(2)->N(1)->N(4)->N(3)
@@ -278,14 +296,16 @@ public class FindMiddleLinkedList {
             case 2:  2 - 2 - 2 - 3 => 3
          */
         ListNode prevNode = new ListNode(0);
-        prevNode.next = head;    // we want to have prevNode one step before currentNode
+        // we want to have prevNode one step before currentNode
+        prevNode.next = head;
 
         ListNode currentNode = head;
-        boolean duplicate =false;
+        boolean duplicate = false;
 
         while (currentNode != null) {
 
-            while (currentNode.next != null && currentNode.val == currentNode.next.val) {
+            while (currentNode.next != null
+                    && currentNode.val == currentNode.next.val) {
                 duplicate = true;
                 currentNode = currentNode.next;
 
@@ -304,7 +324,7 @@ public class FindMiddleLinkedList {
                     head = currentNode.next;
                 }
 
-                if (prevNode.val == currentNode.val ) {
+                if (prevNode.val == currentNode.val) {
                    /* update head if
                        2 - 2 - 2 - 3
                                    H (new-pos)
@@ -340,6 +360,11 @@ public class FindMiddleLinkedList {
 
     }
 
+    /**
+     * print a linked list from the head.
+     *
+     * @param head - the head node
+     */
     private void printNodes(ListNode head) {
 
         ListNode node = head;
@@ -352,7 +377,7 @@ public class FindMiddleLinkedList {
         System.out.printf("%n");
     }
 
-    public void testMiddleNode() {
+    private void testMiddleNode() {
 
         ListNode node4 = new ListNode(4);
         ListNode node3 = new ListNode(3, node4);
@@ -417,19 +442,24 @@ public class FindMiddleLinkedList {
 
     private void testDeleteDuplicateSortedList() {
 
-        ListNode node4_3 = new ListNode(5);
-        ListNode node4_2 = new ListNode(4, node4_3);
-        ListNode node4_1 = new ListNode(4, node4_2);
+        ListNode node4a3 = new ListNode(5);
+        ListNode node4a2 = new ListNode(4, node4a3);
+        ListNode node4a1 = new ListNode(4, node4a2);
 
-        ListNode node3 = new ListNode(3,  node4_1);
-        ListNode node2_2 = new ListNode(2, node3);
-        ListNode node2_1 = new ListNode(2, node2_2);
-        ListNode node1 = new ListNode(1, node2_1);
+        ListNode node3 = new ListNode(3,  node4a1);
+        ListNode node2a2 = new ListNode(2, node3);
+        ListNode node2a1 = new ListNode(2, node2a2);
+        ListNode node1 = new ListNode(1, node2a1);
 
         deleteDuplicatesSortedList(node1);
 
     }
 
+    /**
+     * entry point of the program.
+     *
+     * @param arg - command line arguments
+     */
     public static void main(String[] arg) {
 
         FindMiddleLinkedList fl = new FindMiddleLinkedList();

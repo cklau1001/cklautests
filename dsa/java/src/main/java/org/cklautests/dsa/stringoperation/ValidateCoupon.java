@@ -1,6 +1,13 @@
-package dsa.stringoperation;
+package org.cklautests.dsa.stringoperation;
 
-import java.util.*;
+// import java.util.*;
+import java.util.List;
+import java.util.LinkedList;
+import java.util.TreeSet;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.PriorityQueue;
+import java.util.Comparator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -9,15 +16,27 @@ import java.util.regex.Pattern;
 https://leetcode.com/problems/coupon-code-validator/
 
 Lessons learnt
- - custom order of priority queue only cover the first element, so it is not fully sorted
- - To sort a list, let's use a simple ArrayList instead with a custom comparator or a TreeSet (more convenient)
+ - custom order of priority queue only cover the first element,
+    so it is not fully sorted
+ - To sort a list, let's use a simple ArrayList instead with a
+    custom comparator or a TreeSet (more convenient)
  */
 public class ValidateCoupon {
 
-    public List<String> validateCoupons(String[] code, String[] businessLine, boolean[] isActive) {
+    /**
+     * Validate if the incoming coupons are valid based on the given conditions.
+     * @param code  - the coupon to be checked
+     * @param businessLine - the businessline each coupon belongs to
+     * @param isActive - the status of each coupon
+     * @return - a list of valid coupons sorted by business lines,
+     *          followed by the coupon names.
+     */
+    public List<String> validateCoupons(String[] code,
+                                        String[] businessLine,
+                                        boolean[] isActive) {
 
         List<String> result = new LinkedList<>();
-        List<String[]> templist = new ArrayList<>();
+
 
         Comparator<String[]> comp = (o1, o2) -> {
             // 0 - code
@@ -31,14 +50,11 @@ public class ValidateCoupon {
              */
 
             if (o1[1].compareTo(o2[1]) != 0) {
-                System.out.printf("  [comp]: bline: o1=%s:%s, o2=%s:%s, result=%s%n", o1[0],o1[1], o2[0], o2[1], o1[1].compareTo(o2[1]) );
                 return o1[1].compareTo(o2[1]);
             }
             return o1[0].compareTo(o2[0]);
         };
 
-
-        PriorityQueue<String[]> q = new PriorityQueue<>(comp); // not working as it is not fully sorted
         TreeSet<String[]> treeSet = new TreeSet<>(comp);
 
         int codelen = code.length;
@@ -55,7 +71,9 @@ public class ValidateCoupon {
         Pattern p = Pattern.compile(regx);
 
         for (int i = 0; i < codelen; i++) {
-            if (!isActive[i] || !validateBusinessLines.contains(businessLine[i]) || code[i].isEmpty()) {
+            if (!isActive[i]
+                    || !validateBusinessLines.contains(businessLine[i])
+                    || code[i].isEmpty()) {
                 continue;
             }
             Matcher matcher = p.matcher(code[i]);
@@ -77,6 +95,11 @@ public class ValidateCoupon {
         return result;
     }
 
+    /**
+     * entry point of the program.
+     *
+     * @param args - command line arguments
+     */
     public static void main(String[] args) {
 /*
         String[] code = new String[] {"GROCERY15","ELECTRONICS_50","DISCOUNT10"};
@@ -93,8 +116,9 @@ public class ValidateCoupon {
         String[] busline = new String[] {"grocery","electronics","invalid"};
         boolean[] isActive = new boolean[] {false, true, true};
  */
-        String[] code = new String[] {"TsCwKhY","qCeVkfb","ZGjX07H"}; // expected: ["qCeVkfb","ZGjX07H","TsCwKhY"]
-        String[] busline = new String[] {"restaurant","electronics","pharmacy"};
+        // exp: ["qCeVkfb","ZGjX07H","TsCwKhY"]
+        String[] code = new String[] {"TsCwKhY", "qCeVkfb", "ZGjX07H"};
+        String[] busline = new String[] {"restaurant", "electronics", "pharmacy"};
         boolean[] isActive = new boolean[] {true, true, true};
 
         ValidateCoupon vc = new ValidateCoupon();

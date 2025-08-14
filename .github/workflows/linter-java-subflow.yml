@@ -1,10 +1,27 @@
 name: Subflow to perform java linter
 on:
   workflow_call:
+    inputs:
+      checkout_path:
+        description: 'The path of Java code for linting'
+        required: true
+        type: string
 jobs:
   perform_java_lint:
     runs-on: ubuntu-latest
     steps:
       - run: echo "DSA Java workflow triggered by ${{ github.event_name }} event."
+      - name: Check out code from ${{ inputs.checkout_path }}
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: ${{ inputs.checkout_path }}
+          sparse-checkout-cone-mode: false
+      - run: echo "Code checked out"
+      - name: Listing files
+        run: |
+          ls ${{ github.workspace }}
+          echo " "
+          ls ${{ github.workspace }}/${{ inputs.checkout_path }}
+
       - run: pwd && ls -l
       - run: echo "Java linter status is ${{ job.status }}"

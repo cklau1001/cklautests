@@ -4,6 +4,8 @@ on:
   push:
    paths:
      - dsa/java/**
+env:
+  CHECKOUT_PATH: 'dsa/java'
 jobs:
   dsa-java-workflow:
     runs-on: ubuntu-latest
@@ -13,14 +15,14 @@ jobs:
       - name: Check out code on dsa/java
         uses: actions/checkout@v4
         with:
-          sparse-checkout: 'dsa/java'
+          sparse-checkout: $CHECKOUT_PATH
           sparse-checkout-cone-mode: false
       - run: echo "Code checked out"
       - name: Listing files
         run: |
           ls ${{ github.workspace }}
           echo " "
-          ls ${{ github.workspace }}/dsa/java
+          ls ${{ github.workspace }}/$CHECKOUT_PATH
       - name: Set up JDK 24
         uses: actions/setup-java@v4
         with:
@@ -29,10 +31,12 @@ jobs:
           cache: maven
       - run: java -version
       - name: Build with Maven
-        working-directory: ./dsa/java
+        working-directory: ./$CHECKOUT_PATH
         run: mvn compile
 
   java-lint:
     uses: ./.github/workflows/linter-java-subflow.yml
+    with:
+      checkout_path: $CHECKOUT_PATH
     needs: [dsa-java-workflow]
 

@@ -37,7 +37,7 @@ jobs:
           VALIDATE_PYTHON_PYLINT: true
           LOG_LEVEL: INFO
           LINTER_RULES_PATH: /
-          PYTHON_PYLINT_CONFIG_FILE: ./dsa/python/.pylintrc
+          PYTHON_PYLINT_CONFIG_FILE: ./${{ inputs.checkout_path }}/.pylintrc
 
       - run: echo "Python linter status is ${{ job.status }}"
 

@@ -26,7 +26,7 @@ jobs:
           ls ${{ github.workspace }}/${{ inputs.checkout_path }}
 
       - name: Run Super-linter
-        uses: super-linter/super-linter@v8.0.0
+        uses: super-linter/super-linter@v7.2.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           INPUT_WORKING-DIRECTORY: ./${{ inputs.checkout_path }}
@@ -35,7 +35,7 @@ jobs:
           # JAVA_COMMAND_ARGS: "-c ${{ github.workspace }}/${{ inputs.checkout_path }}/mycheckstyle.xml"
           JAVA_JVM_COMMAND_ARGS: -Dorg.checkstyle.sun.suppressionfilter.config=./${{ inputs.checkout_path }}/checkstyle-suppressionss.xml
           # JAVA_FILE_NAME: google_checks.xml
-          JAVA_LINTER_RULES: .github/linters/mycheckstyle.xml
-          # JAVA_FILE_NAME: mycheckstyle.xml
+          JAVA_FILE_NAME: mycheckstyle.xml
+          LINTER_RULES_PATH: /
 
       - run: echo "Java linter status is ${{ job.status }}"

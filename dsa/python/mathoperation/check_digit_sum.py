@@ -3,7 +3,6 @@
 Program to check if an input integer can be divided by the sum and product of each digits.
 https://leetcode.com/problems/group-anagrams
 """
-from sortedcontainers import SortedList
 
 class CheckDigitSum:
     """

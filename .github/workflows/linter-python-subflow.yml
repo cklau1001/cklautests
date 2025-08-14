@@ -8,13 +8,13 @@ on:
         type: string
 
 jobs:
-  perform_java_lint:
+  perform_python_lint:
     permissions:
       contents: read
       statuses: write
     runs-on: ubuntu-latest
     steps:
-      - run: echo "DSA Java workflow triggered by ${{ github.event_name }} event."
+      - run: echo "DSA Python workflow triggered by ${{ github.event_name }} event."
       - name: Check out code from ${{ inputs.checkout_path }}
         uses: actions/checkout@v4
         with:

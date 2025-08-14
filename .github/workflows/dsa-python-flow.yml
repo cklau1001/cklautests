@@ -46,3 +46,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - run: echo "Job status is ${{ job.status }}"
+
+  python-lint:
+    permissions:
+      contents: read
+      statuses: write
+    uses: ./.github/workflows/linter-python-subflow.yml
+    with:
+      checkout_path: ${{ needs.init-workflow.outputs.checkout_path }}
+    needs: [init-workflow, dsa-java-workflow]

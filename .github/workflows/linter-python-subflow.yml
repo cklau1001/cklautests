@@ -1,0 +1,42 @@
+name: Subflow to perform python linter
+on:
+  workflow_call:
+    inputs:
+      checkout_path:
+        description: 'The path of Java code for linting'
+        required: true
+        type: string
+
+jobs:
+  perform_java_lint:
+    permissions:
+      contents: read
+      statuses: write
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "DSA Java workflow triggered by ${{ github.event_name }} event."
+      - name: Check out code from ${{ inputs.checkout_path }}
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: ${{ inputs.checkout_path }}
+          sparse-checkout-cone-mode: false
+          fetch-depth: 0
+
+      - run: echo "Code checked out"
+      - name: Listing files
+        run: |
+          ls ${{ github.workspace }}
+          echo " "
+          ls ${{ github.workspace }}/${{ inputs.checkout_path }}
+
+      - name: Run Super-linter
+        uses: super-linter/super-linter@v8.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # INPUT_WORKING-DIRECTORY: ./${{ inputs.checkout_path }}
+          DEFAULT_BRANCH: ${{ github.ref_name }}
+          VALIDATE_PYTHON: true
+          LINTER_RULES_PATH: /dsa/python
+
+      - run: echo "Python linter status is ${{ job.status }}"
+

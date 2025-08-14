@@ -33,7 +33,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: feature/githubaction1
           VALIDATE_JAVA: true
+          LINTER_RULES_PATH: .
           JAVA_JVM_COMMAND_ARGS: -Dorg.checkstyle.sun.suppressionfilter.config=./${{ inputs.checkout_path }}/checkstyle-suppressionss.xml
-          JAVA_FILE_NAME: ./${{ inputs.checkout_path }}/checkstyle.xml
+          JAVA_FILE_NAME: checkstyle.xml
 
       - run: echo "Java linter status is ${{ job.status }}"

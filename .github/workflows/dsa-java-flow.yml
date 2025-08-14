@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Initialize CHECKOUT_PATH
         id: init_checkout_path
-      - run: echo "checkout_path=$CHECKOUT_PATH" >> $GITHUB_OUTPUT
+        run: echo "checkout_path=$CHECKOUT_PATH" >> $GITHUB_OUTPUT
 
   dsa-java-workflow:
     runs-on: ubuntu-latest

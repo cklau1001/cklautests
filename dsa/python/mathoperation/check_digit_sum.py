@@ -6,6 +6,7 @@ https://leetcode.com/problems/group-anagrams
 
 class CheckDigitSum:
     """
+
         The class to check if the input integer (n) can be divided by the sum and product of
         each digits.
 

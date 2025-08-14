@@ -27,13 +27,11 @@ jobs:
 
       - name: Run Super-linter
         uses: super-linter/super-linter@v8.0.0
-        with:
-          working-directory: ./${{ inputs.checkout_path }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          INPUT_WORKING-DIRECTORY: ./${{ inputs.checkout_path }}
           DEFAULT_BRANCH: feature/githubaction1
           VALIDATE_JAVA: true
-          LINTER_RULES_PATH: ${{ github.workspace }}/${{ inputs.checkout_path }}
           JAVA_JVM_COMMAND_ARGS: -Dorg.checkstyle.sun.suppressionfilter.config=./${{ inputs.checkout_path }}/checkstyle-suppressionss.xml
           JAVA_FILE_NAME: checkstyle.xml
 

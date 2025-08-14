@@ -12,7 +12,7 @@ jobs:
     steps:
       - run: echo "DSA Java workflow triggered by ${{ github.event_name }} event."
       - run: echo "Runner=${{ runner.os }}, branch=${{ github.ref }}, repo=${{ github.repository }}"
-      - name: Check out code on dsa/java
+      - name: Check out code on ${{ env.CHECKOUT_PATH }}
         uses: actions/checkout@v4
         with:
           sparse-checkout: $CHECKOUT_PATH
@@ -22,7 +22,7 @@ jobs:
         run: |
           ls ${{ github.workspace }}
           echo " "
-          ls ${{ github.workspace }}/$CHECKOUT_PATH
+          ls ${{ github.workspace }}/${{ env.CHECKOUT_PATH }}
       - name: Set up JDK 24
         uses: actions/setup-java@v4
         with:
@@ -37,6 +37,6 @@ jobs:
   java-lint:
     uses: ./.github/workflows/linter-java-subflow.yml
     with:
-      checkout_path: $CHECKOUT_PATH
+      checkout_path: ${{ env.CHECKOUT_PATH }}
     needs: [dsa-java-workflow]
 

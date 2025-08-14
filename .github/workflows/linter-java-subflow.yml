@@ -34,7 +34,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # INPUT_WORKING-DIRECTORY: ./${{ inputs.checkout_path }}
-          DEFAULT_BRANCH: feature/githubaction1
+          DEFAULT_BRANCH: ${{ github.ref_name }}
           VALIDATE_JAVA: true
           JAVA_JVM_COMMAND_ARGS: -Dorg.checkstyle.sun.suppressionfilter.config=./${{ inputs.checkout_path }}/checkstyle-suppressionss.xml
           JAVA_FILE_NAME: google_checks.xml

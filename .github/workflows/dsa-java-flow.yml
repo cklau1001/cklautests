@@ -31,4 +31,7 @@ jobs:
       - name: Build with Maven
         working-directory: ./dsa/java
         run: mvn compile
-      - run: echo "Job status is ${{ job.status }}"
+
+  java-lint:
+    uses: ./.github/workflows/linter-java-subflow.yml
+

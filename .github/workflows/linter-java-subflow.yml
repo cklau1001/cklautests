@@ -1,0 +1,10 @@
+name: Subflow to perform java linter
+on:
+  workflow_call:
+jobs:
+  perform_java_lint:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "DSA Java workflow triggered by ${{ github.event_name }} event."
+      - run: pwd
+      - run: echo "Java linter status is ${{ job.status }}"

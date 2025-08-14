@@ -6,6 +6,7 @@ on:
       - dsa/python/**
 env:
   CHECKOUT_PATH: 'dsa/python'
+  PYTHON_VERSION: '3.13'
 
 jobs:
   init-workflow:
@@ -33,4 +34,10 @@ jobs:
           ls ${{ github.workspace }}
           echo " "
           ls ${{ github.workspace }}/$CHECKOUT_PATH
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Show Python version
+        run: python -c "import sys; print(sys.version)"
       - run: echo "Job status is ${{ job.status }}"

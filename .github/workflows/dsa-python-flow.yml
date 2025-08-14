@@ -54,4 +54,4 @@ jobs:
     uses: ./.github/workflows/linter-python-subflow.yml
     with:
       checkout_path: ${{ needs.init-workflow.outputs.checkout_path }}
-    needs: [init-workflow, dsa-java-workflow]
+    needs: [init-workflow, dsa-python-workflow]

@@ -35,6 +35,7 @@ jobs:
           # JAVA_COMMAND_ARGS: "-c ${{ github.workspace }}/${{ inputs.checkout_path }}/mycheckstyle.xml"
           JAVA_JVM_COMMAND_ARGS: -Dorg.checkstyle.sun.suppressionfilter.config=./${{ inputs.checkout_path }}/checkstyle-suppressionss.xml
           # JAVA_FILE_NAME: google_checks.xml
-          JAVA_FILE_NAME: mycheckstyle.xml
+          JAVA_LINTER_RULES: .github/linters/mycheckstyle.xml
+          # JAVA_FILE_NAME: mycheckstyle.xml
 
       - run: echo "Java linter status is ${{ job.status }}"

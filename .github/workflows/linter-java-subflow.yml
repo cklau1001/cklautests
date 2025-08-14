@@ -6,5 +6,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "DSA Java workflow triggered by ${{ github.event_name }} event."
-      - run: pwd
+      - run: pwd && ls -l
       - run: echo "Java linter status is ${{ job.status }}"

@@ -34,4 +34,5 @@ jobs:
 
   java-lint:
     uses: ./.github/workflows/linter-java-subflow.yml
+    needs: [dsa-java-workflow]
 

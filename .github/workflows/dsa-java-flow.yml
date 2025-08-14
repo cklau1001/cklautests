@@ -31,7 +31,7 @@ jobs:
           cache: maven
       - run: java -version
       - name: Build with Maven
-        working-directory: ./dsa/java
+        working-directory: ./${{ env.CHECKOUT_PATH }}
         run: mvn compile
 
   java-lint:

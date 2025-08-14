@@ -46,7 +46,7 @@ jobs:
 
   java-lint:
     permissions:
-      contents: write
+      contents: read
       statuses: write
     uses: ./.github/workflows/linter-java-subflow.yml
     with:

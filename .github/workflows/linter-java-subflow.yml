@@ -10,7 +10,7 @@ on:
 jobs:
   perform_java_lint:
     permissions:
-      contents: write
+      contents: read
       statuses: write
     runs-on: ubuntu-latest
     steps:

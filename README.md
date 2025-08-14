@@ -1,5 +1,5 @@
-[![Main workflow](https://github.com/cklau1001/cklautests/actions/workflows/main-flow.yml/badge.svg?branch=feature%2Fgithubaction1)](https://github.com/cklau1001/cklautests/actions/workflows/main-flow.yml)
-[![DSA-Java-workflow](https://github.com/cklau1001/cklautests/actions/workflows/dsa-java-flow.yml/badge.svg)](https://github.com/marketplace/actions/super-linter)
+[![Main workflow](https://github.com/cklau1001/cklautests/actions/workflows/main-flow.yml/badge.svg)](https://github.com/cklau1001/cklautests/actions/workflows/main-flow.yml)
+[![DSA Java workflow](https://github.com/cklau1001/cklautests/actions/workflows/dsa-java-flow.yml/badge.svg)](https://github.com/cklau1001/cklautests/actions/workflows/dsa-java-flow.yml)
 # Background
 The repository is set up to capture all cool stuff that I have learnt. Hopefully, it can also give you some insight when you are stuck during your technology journey.  :-)
 

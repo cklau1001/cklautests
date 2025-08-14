@@ -16,6 +16,8 @@ jobs:
         with:
           sparse-checkout: ${{ inputs.checkout_path }}
           sparse-checkout-cone-mode: false
+          fetch-depth: 0
+
       - run: echo "Code checked out"
       - name: Listing files
         run: |
@@ -23,5 +25,13 @@ jobs:
           echo " "
           ls ${{ github.workspace }}/${{ inputs.checkout_path }}
 
-      - run: pwd && ls -l
+      - name: Run Super-linter
+        uses: super-linter/super-linter@v8.0.0
+        with:
+          working-directory: ./${{ inputs.checkout_path }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VALIDATE_JAVA: true
+          JAVA_FILE_NAME: checkstyle.xml
+
       - run: echo "Java linter status is ${{ job.status }}"

@@ -33,10 +33,9 @@ jobs:
         uses: super-linter/super-linter@v8.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # INPUT_WORKING-DIRECTORY: ./${{ inputs.checkout_path }}
           DEFAULT_BRANCH: ${{ github.ref_name }}
           VALIDATE_PYTHON_PYLINT: true
-          LOG_LEVEL: DEBUG
+          LOG_LEVEL: INFO
           LINTER_RULES_PATH: /
           PYTHON_PYLINT_CONFIG_FILE: ./dsa/python/.pylintrc
 

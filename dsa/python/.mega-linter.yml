@@ -6,5 +6,6 @@ LINTER_RULES_PATH: /
 PYTHON_PYLINT_CONFIG_FILE: ./${{ inputs.checkout_path }}/.pylintrc
 
 PRE_COMMANDS:
-  - command: pip install -r requirements.txt
+  - command: python3 -m pip install -r requirements.txt
     venu: pylint
+    # run_before_linters: True

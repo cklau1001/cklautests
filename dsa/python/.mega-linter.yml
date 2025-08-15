@@ -1,3 +1,10 @@
+ENABLE: [PYTHON]
+ENABLE_LINTERS: [PYTHON_PYLINT]
+DISABLE_LINTERS: [PYTHON_BLACK, PYTHON_FLAKE8, PYTHON_ISORT, PYTHON_MYPY, PYTHON_BANDIT, PYTHON_PYRIGHT, PYTHON_RUFF]
+LOG_LEVEL: INFO
+LINTER_RULES_PATH: /
+PYTHON_PYLINT_CONFIG_FILE: ./${{ inputs.checkout_path }}/.pylintrc
+
 PRE_COMMANDS:
   - command: pip install -r requirements.txt
-    cwd: "root"
+    venu: pylint

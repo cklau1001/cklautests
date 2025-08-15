@@ -68,12 +68,6 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: ${{ github.ref_name }}
-          ENABLE: PYTHON
-          ENABLE_LINTERS: PYTHON_PYLINT
-          DISABLE_LINTERS: PYTHON_BLACK, PYTHON_FLAKE8, PYTHON_ISORT, PYTHON_MYPY, PYTHON_BANDIT, PYTHON_PYRIGHT, PYTHON_RUFF
-          LOG_LEVEL: INFO
-          LINTER_RULES_PATH: /
-          PYTHON_PYLINT_CONFIG_FILE: ./${{ inputs.checkout_path }}/.pylintrc
 
       - run: echo "Python linter status is ${{ job.status }}"
 

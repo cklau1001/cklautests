@@ -8,6 +8,6 @@ GITHUB_STATUS_REPORTER: true
 MARKDOWN_SUMMARY_REPORTER: true
 
 PRE_COMMANDS:
-  - command: pwd && ls -alF && python3 -m pip install  /home/runner/work/cklautests/cklautests/requirements.txt
+  - command: pwd && ls -alF && python3 -m pip install -r /home/runner/work/cklautests/cklautests/requirements.txt
     venv: pylint
     # run_before_linters: True

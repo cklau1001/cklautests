@@ -11,8 +11,8 @@ from sortedcontainers import SortedList
 
 class MinTimeToActivateString3639:
     """
-    A class to compute the minimum time to ensure that a string contains
-    k sets of valid substrings
+     A class to compute the minimum time to ensure that a string contains
+     k sets of valid substrings
     """
 
     def mintime(self, s: str, order: List[int] , k: int) -> int:

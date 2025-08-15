@@ -1,0 +1,3 @@
+PRE_COMMANDS:
+  - command: pip install -r requirements.txt
+    cwd: "root"

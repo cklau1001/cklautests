@@ -53,6 +53,9 @@ jobs:
             cp -p ./${{ inputs.checkout_path }}/requirements.txt .            
             cp -p ./${{ inputs.checkout_path }}/.mega-linter.yml .
 
+      - name: find requirements.txt in workspace
+        run: ls -l /home/runner/work/cklautests/cklautests/requirements.txt
+
      # - name: Run Super-linter
      #   uses: super-linter/super-linter@v8.0.0
      #   env:

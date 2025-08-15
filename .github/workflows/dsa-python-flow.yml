@@ -1,28 +1,31 @@
-name: DSA Java workflow
+name: DSA Python workflow
 run-name: ${{ github.actor }}
 on:
   push:
-   paths:
-     - dsa/java/**
+    paths:
+      - dsa/python/**
 env:
-  CHECKOUT_PATH: 'dsa/java'
-  JAVA_VERSION: '24'
-  JAVA_VENDOR: 'oracle'
+  CHECKOUT_PATH: 'dsa/python'
+  PYTHON_VERSION: '3.13'
 
 jobs:
   init-workflow:
     runs-on: ubuntu-latest
     outputs:
       checkout_path: ${{ steps.init_checkout_path.outputs.checkout_path }}
+      python_version: ${{ steps.init_version.outputs.python_version }}
     steps:
       - name: Initialize CHECKOUT_PATH
         id: init_checkout_path
         run: echo "checkout_path=$CHECKOUT_PATH" >> $GITHUB_OUTPUT
+      - name: Initialize PYTHON_VERSION
+        id: init_version
+        run: echo "python_version=$PYTHON_VERSION" >> $GITHUB_OUTPUT
 
-  dsa-java-workflow:
+  dsa-python-workflow:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "DSA Java workflow triggered by ${{ github.event_name }} event."
+      - run: echo "DSA Python workflow triggered by ${{ github.event_name }} event."
       - run: echo "Runner=${{ runner.os }}, branch=${{ github.ref }}, repo=${{ github.repository }}"
       - name: Check out code on ${{ env.CHECKOUT_PATH }}
         uses: actions/checkout@v4
@@ -35,23 +38,24 @@ jobs:
           ls ${{ github.workspace }}
           echo " "
           ls ${{ github.workspace }}/$CHECKOUT_PATH
-      - name: Set up JDK 24
-        uses: actions/setup-java@v4
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v5
         with:
-          java-version: ${{ env.JAVA_VERSION }}
-          distribution: ${{ env.JAVA_VENDOR }}
-          cache: maven
-      - run: java -version
-      - name: Build with Maven
+          python-version: ${{ env.PYTHON_VERSION }}
+      - name: Show Python version
+        run: python -c "import sys; print(sys.version)"
+      - name: Install dependencies
         working-directory: ./${{ env.CHECKOUT_PATH }}
-        run: mvn compile
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - run: echo "Job status is ${{ job.status }}"
 
-  java-lint:
+  python-lint:
     permissions:
-      contents: read
-      statuses: write
-    uses: ./.github/workflows/linter-java-subflow.yml
+      contents: write
+      issues: write
+    uses: ./.github/workflows/linter-python-subflow.yml
     with:
       checkout_path: ${{ needs.init-workflow.outputs.checkout_path }}
-    needs: [init-workflow, dsa-java-workflow]
-
+    needs: [init-workflow, dsa-python-workflow]

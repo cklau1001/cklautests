@@ -1,0 +1,54 @@
+name: Subflow to perform python linter
+on:
+  workflow_call:
+    inputs:
+      checkout_path:
+        description: 'The path of python code for linting'
+        required: true
+        type: string
+
+jobs:
+  perform_python_lint:
+    permissions:
+      contents: write
+      issues: write
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "DSA Python workflow triggered by ${{ github.event_name }} event."
+      - name: Check out code from ${{ inputs.checkout_path }}
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: ${{ inputs.checkout_path }}
+          sparse-checkout-cone-mode: false
+          fetch-depth: 0
+
+      - run: echo "Code checked out"
+      - name: Listing files
+        run: |
+          ls ${{ github.workspace }}
+          echo " "
+          ls ${{ github.workspace }}/${{ inputs.checkout_path }}
+
+      - name: Prepare MegaLinter
+        run: |
+            cp -p ./${{ inputs.checkout_path }}/requirements.txt .            
+            cp -p ./${{ inputs.checkout_path }}/.mega-linter.yml .
+
+      - name: Run MegaLinter
+        uses: oxsecurity/megalinter@v7
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BRANCH: ${{ github.ref_name }}
+
+      # Upload MegaLinter artifacts
+      - name: Archive production artifacts
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: MegaLinter reports
+          path: |
+            megalinter-reports
+            mega-linter.log          
+
+      - run: echo "Python linter status is ${{ job.status }}"
+

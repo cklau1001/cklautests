@@ -50,13 +50,8 @@ jobs:
         run: pylint ./stringoperation/mintime_activate_string.py
       - name: Fix requirements.txt
         run: |
-            cp -p ./${{ inputs.checkout_path }}/requirements.txt .
-            cp -p ./${{ inputs.checkout_path }}/requirements.txt /venvs/pylint/.
+            cp -p ./${{ inputs.checkout_path }}/requirements.txt .            
             cp -p ./${{ inputs.checkout_path }}/.mega-linter.yml .
-
-      - name: Check /venvs/pylint
-        run: |
-          ls -alF /vevs/pylint
 
      # - name: Run Super-linter
      #   uses: super-linter/super-linter@v8.0.0

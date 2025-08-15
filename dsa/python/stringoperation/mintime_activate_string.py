@@ -2,7 +2,7 @@
 
  To compute the minimum time to ensure that a string contains k sets of valid substrings
  # 3639
-# https://leetcode.com/problems/minimum-time-to-activate-string/description/
+ # https://leetcode.com/problems/minimum-time-to-activate-string/description/
 
 SortedList is a handy tool to provide a sorted list and locate left and right indexes
 

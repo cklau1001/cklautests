@@ -13,10 +13,14 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       checkout_path: ${{ steps.init_checkout_path.outputs.checkout_path }}
+      python_version: ${{ steps.init_version.outputs.python_version }}
     steps:
       - name: Initialize CHECKOUT_PATH
         id: init_checkout_path
         run: echo "checkout_path=$CHECKOUT_PATH" >> $GITHUB_OUTPUT
+      - name: Initialize PYTHON_VERSION
+        id: init_version
+        run: echo "python_version=$PYTHON_VERSION" >> $GITHUB_OUTPUT
 
   dsa-python-workflow:
     runs-on: ubuntu-latest
@@ -54,4 +58,5 @@ jobs:
     uses: ./.github/workflows/linter-python-subflow.yml
     with:
       checkout_path: ${{ needs.init-workflow.outputs.checkout_path }}
+      python_version: ${{ needs.init-workflow.outputs.python_version }}
     needs: [init-workflow, dsa-python-workflow]

@@ -51,7 +51,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: ${{ github.ref_name }}
           VALIDATE_PYTHON_PYLINT: true
-          LOG_LEVEL: INFO
+          LOG_LEVEL: DEBUG
           LINTER_RULES_PATH: /
           PYTHON_PYLINT_CONFIG_FILE: ./${{ inputs.checkout_path }}/.pylintrc
 

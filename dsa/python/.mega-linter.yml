@@ -4,12 +4,11 @@ DISABLE_LINTERS: [PYTHON_BLACK, PYTHON_FLAKE8, PYTHON_ISORT, PYTHON_MYPY, PYTHON
 LOG_LEVEL: INFO
 LINTER_RULES_PATH: /
 PYTHON_PYLINT_CONFIG_FILE: .pylintrc
-GITHUB_STATUS_REPORTER: true
-MARKDOWN_SUMMARY_REPORTER: true
+# GITHUB_STATUS_REPORTER: true
+# MARKDOWN_SUMMARY_REPORTER: true
 
 PRE_COMMANDS:
   - command: pwd && cp requirements.txt /venvs/requirements.txt
     cwd: workspace
   - command: pwd && ls -alF && python3 -m pip install -r /venvs/requirements.txt
     venv: pylint
-    # run_before_linters: True

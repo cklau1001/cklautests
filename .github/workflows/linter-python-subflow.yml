@@ -3,7 +3,7 @@ on:
   workflow_call:
     inputs:
       checkout_path:
-        description: 'The path of Java code for linting'
+        description: 'The path of python code for linting'
         required: true
         type: string
 

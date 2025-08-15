@@ -8,7 +8,7 @@ GITHUB_STATUS_REPORTER: true
 MARKDOWN_SUMMARY_REPORTER: true
 
 PRE_COMMANDS:
-  - command: pip freeze > /venvs/requirements.txt
+  - command: cp /home/runner/work/cklautests/cklautests/requirements.txt /venvs/requirements.txt
     cwd: workspace
   - command: pwd && ls -alF && python3 -m pip install -r /venvs/requirements.txt
     venv: pylint

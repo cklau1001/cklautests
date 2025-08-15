@@ -64,11 +64,14 @@ jobs:
       - name: Run MegaLinter
         uses: oxsecurity/megalinter@v7
         env:
+          PRE_COMMANDS: |
+            python -m pip install --upgrade pip
+            pip install -r requirements.txt
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: ${{ github.ref_name }}
           ENABLE: PYTHON
           ENABLE_LINTERS: PYTHON_PYLINT
-          # DISABLE_LINTERS: PYTHON_BLACK, PYTHON_FLAKE8, PYTHON_ISORT, PYTHON_MYPY, PYTHON_BANDIT, PYTHON_PYRIGHT, PYTHON_RUFF
+          DISABLE_LINTERS: PYTHON_BLACK, PYTHON_FLAKE8, PYTHON_ISORT, PYTHON_MYPY, PYTHON_BANDIT, PYTHON_PYRIGHT, PYTHON_RUFF
           LOG_LEVEL: INFO
           LINTER_RULES_PATH: /
           PYTHON_PYLINT_CONFIG_FILE: ./${{ inputs.checkout_path }}/.pylintrc

@@ -10,8 +10,8 @@ on:
 jobs:
   perform_python_lint:
     permissions:
-      contents: read
-      statuses: write
+      contents: write
+      issues: write
     runs-on: ubuntu-latest
     steps:
       - run: echo "DSA Python workflow triggered by ${{ github.event_name }} event."
@@ -39,6 +39,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BRANCH: ${{ github.ref_name }}
+
+      # Upload MegaLinter artifacts
+      - name: Archive production artifacts
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: MegaLinter reports
+          path: |
+            megalinter-reports
+            mega-linter.log          
 
       - run: echo "Python linter status is ${{ job.status }}"
 

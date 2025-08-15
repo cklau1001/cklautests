@@ -6,6 +6,8 @@ on:
      - dsa/java/**
 env:
   CHECKOUT_PATH: 'dsa/java'
+  JAVA_VERSION: '24'
+  JAVA_VENDOR: 'oracle'
 
 jobs:
   init-workflow:
@@ -36,8 +38,8 @@ jobs:
       - name: Set up JDK 24
         uses: actions/setup-java@v4
         with:
-          java-version: '24'
-          distribution: 'oracle'
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: ${{ env.JAVA_VENDOR }}
           cache: maven
       - run: java -version
       - name: Build with Maven

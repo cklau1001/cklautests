@@ -45,7 +45,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install pylint
-          python stringoperation/mintime_activate_string.py
+          pylint ./stringoperation/mintime_activate_string.py
 
       - name: Run Super-linter
         uses: super-linter/super-linter@v8.0.0

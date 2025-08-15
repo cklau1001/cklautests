@@ -4,9 +4,10 @@ DISABLE_LINTERS: [PYTHON_BLACK, PYTHON_FLAKE8, PYTHON_ISORT, PYTHON_MYPY, PYTHON
 LOG_LEVEL: INFO
 LINTER_RULES_PATH: /
 PYTHON_PYLINT_CONFIG_FILE: .pylintrc
-# GITHUB_STATUS_REPORTER: true
+GITHUB_STATUS_REPORTER: true
+MARKDOWN_SUMMARY_REPORTER: true
 
 PRE_COMMANDS:
-  - command: pwd && ls && python3 -m pip install sortedcontainers
+  - command: pwd && ls -alF && python3 -m pip install requirements.txt
     venv: pylint
     # run_before_linters: True

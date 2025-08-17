@@ -63,3 +63,8 @@ jobs:
       - name: Build with Maven
         working-directory: ./${{ env.CHECKOUT_PATH }}
         run: mvn test
+      - name: Generate coverage report (Cicirello)
+        uses: cicirello/jacoco-badge-generator@v2.12.1
+        with:
+          jacoco-csv-file: ./${{ env.CHECKOUT_PATH }}/target/site/jacoco/jacoco.csv
+            

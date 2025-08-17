@@ -48,11 +48,6 @@ jobs:
           DEFAULT_BRANCH: ${{ github.ref_name }}
           VALIDATE_PYTHON: true
           VALIDATE_PYTHON_PYLINT: true
-          VALIDATE_PYTHON_BLACK: false
-          VALIDATE_PYTHON_FLAKE8: false
-          VALIDATE_PYTHON_ISORT: false
-          VALIDATE_PYTHON_MYPY: false
-          VALIDATE_PYTHON_RUFF: false
           PYTHON_PYLINT_CONFIG_FILE: .pylintrc
           LINTER_RULES_PATH: /
           LOG_LEVEL: INFO

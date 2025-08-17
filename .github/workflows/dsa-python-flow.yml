@@ -22,7 +22,17 @@ jobs:
         id: init_version
         run: echo "python_version=$PYTHON_VERSION" >> $GITHUB_OUTPUT
 
+  python-lint:
+    permissions:
+      contents: write
+      issues: write
+    uses: ./.github/workflows/linter-python-subflow.yml
+    with:
+      checkout_path: ${{ needs.init-workflow.outputs.checkout_path }}
+    needs: [init-workflow]
+
   dsa-python-workflow:
+    needs: [python-lint]
     runs-on: ubuntu-latest
     steps:
       - run: echo "DSA Python workflow triggered by ${{ github.event_name }} event."
@@ -50,12 +60,3 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
       - run: echo "Job status is ${{ job.status }}"
-
-  python-lint:
-    permissions:
-      contents: write
-      issues: write
-    uses: ./.github/workflows/linter-python-subflow.yml
-    with:
-      checkout_path: ${{ needs.init-workflow.outputs.checkout_path }}
-    needs: [init-workflow, dsa-python-workflow]

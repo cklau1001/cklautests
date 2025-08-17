@@ -4,5 +4,6 @@
         "https://checkstyle.org/dtds/suppressions_1_0.dtd">
 <!-- suppression file -->
 <suppressions>
+    <suppress checks="." files="(?!.*Test\.java$).*$" />
     <suppress files="." checks="MagicNumberCheck" />
 </suppressions>

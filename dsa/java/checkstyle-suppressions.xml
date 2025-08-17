@@ -5,5 +5,5 @@
 <!-- suppression file -->
 <suppressions>
     <suppress checks="." files="(.*)[\\/]src[\\/]test[\\/](.*)[\\/](.*Test\.java$).*$" />
-    <suppress files="." checks="MagicNumberCheck" />
+    <suppress files="." checks="MagicNumberCheck1" />
 </suppressions>

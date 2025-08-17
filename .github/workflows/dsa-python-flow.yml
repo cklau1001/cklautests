@@ -32,7 +32,7 @@ jobs:
     needs: [init-workflow]
 
   dsa-python-workflow:
-    needs: [python-lint]
+    needs: [init-workflow]
     runs-on: ubuntu-latest
     steps:
       - run: echo "DSA Python workflow triggered by ${{ github.event_name }} event."

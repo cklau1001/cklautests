@@ -33,7 +33,7 @@ jobs:
         run: |
             cp -p ./${{ inputs.checkout_path }}/requirements.txt .            
             cp -p ./${{ inputs.checkout_path }}/.mega-linter.yml .
-            cp -p ./${{ inputs.checkout_path }}/.pylintrc
+            cp -p ./${{ inputs.checkout_path }}/.pylintrc .
 
       # - name: Run MegaLinter
       #  uses: oxsecurity/megalinter@v7

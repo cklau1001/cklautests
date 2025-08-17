@@ -14,8 +14,10 @@ import java.util.HashSet;
 46 - permutation
 https://leetcode.com/problems/permutations/description/
 
+
 47 - permutation 2
 https://leetcode.com/problems/permutations-ii/description/
+
 
 input [0,1,2], size = 3
 
@@ -159,9 +161,10 @@ public class Permutation {
      * Find all combination numbers if the input nums can have
      *  duplicate numbers.
      * @param nums - list of input numbers
+     * @param useFreqMap - To compute by using a frequency map ( more efficient )
      * @return - a list of unique combination of numbers
      */
-    public List<List<Integer>> permuteUnique47(final int[] nums) {
+    public List<List<Integer>> permuteUnique47(final int[] nums, boolean useFreqMap) {
         /*
 
         47
@@ -192,8 +195,13 @@ public class Permutation {
         boolean[] visited = new boolean[nums.length];
         Set<List<Integer>> set = new HashSet<>();
         List<List<Integer>> result = new ArrayList<>();
-        runDFSUniqueSwap(0, path, result, set);
-        // DFSUniqueSwap2(nums.length, freqMap, pathMap, result);
+
+        if (useFreqMap) {
+            runDFSUniqueSwap2(nums.length, freqMap, pathMap, result);
+        } else {
+            runDFSUniqueSwap(0, path, result, set);
+        }
+
         return result;
 
     }
@@ -286,21 +294,4 @@ public class Permutation {
 
     }
 
-    /**
-     * Entry point of the program.
-     * @param args - command line argument
-     */
-    public static void main(String[] args) {
-
-        int[] input = new int[]{1, 1, 2};
-        List<List<Integer>> result;
-
-        Permutation p1 = new Permutation();
-        // result = p1.permutateByRec(input);
-        // result = p1.permutateBySwap(input);
-        result = p1.permuteUnique47(input);
-
-        result.forEach(System.out::println);
-
-    }
 }

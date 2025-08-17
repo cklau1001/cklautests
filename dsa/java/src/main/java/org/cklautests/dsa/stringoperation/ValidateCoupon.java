@@ -1,12 +1,10 @@
 package org.cklautests.dsa.stringoperation;
 
-// import java.util.*;
 import java.util.List;
 import java.util.LinkedList;
 import java.util.TreeSet;
 import java.util.Set;
 import java.util.HashSet;
-import java.util.PriorityQueue;
 import java.util.Comparator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -95,55 +93,4 @@ public class ValidateCoupon {
         return result;
     }
 
-    /**
-     * entry point of the program.
-     *
-     * @param args - command line arguments
-     */
-    public static void main(String[] args) {
-/*
-        String[] code = new String[] {"GROCERY15","ELECTRONICS_50","DISCOUNT10"};
-        String[] busline = new String[] {"grocery","electronics","invalid"};
-        boolean[] isActive = new boolean[] {false, true, true};
- */
-/*
-        String[] code = new String[] {"SAVE20","","PHARMA5","SAVE@20"};
-        String[] busline = new String[] {"restaurant","grocery","pharmacy","restaurant"};
-        boolean[] isActive = new boolean[] {true, true, true, true};
-*/
-/*
-        String[] code = new String[] {"GROCERY15","ELECTRONICS_50","DISCOUNT10"};
-        String[] busline = new String[] {"grocery","electronics","invalid"};
-        boolean[] isActive = new boolean[] {false, true, true};
- */
-        // exp: ["qCeVkfb","ZGjX07H","TsCwKhY"]
-        String[] code = new String[] {"TsCwKhY", "qCeVkfb", "ZGjX07H"};
-        String[] busline = new String[] {"restaurant", "electronics", "pharmacy"};
-        boolean[] isActive = new boolean[] {true, true, true};
-
-        ValidateCoupon vc = new ValidateCoupon();
-        List<String> result = vc.validateCoupons(code, busline, isActive);
-
-        result.forEach(System.out::println);
-
-        PriorityQueue<Integer> pint = new PriorityQueue<>();
-
-        pint.offer(10);
-        pint.offer(5);
-        pint.offer(4);
-        pint.offer(9);
-
-        pint.forEach(System.out::println); // output is 4-9-5-10, so not fully sorted
-
-        System.out.println("Using TreeSet instead....");
-        TreeSet<Integer> pset = new TreeSet<>();
-        pset.add(10);
-        pset.add(5);
-        pset.add(4);
-        pset.add(9);
-
-        pset.forEach(System.out::println); // output is 4-5-9-10, so not fully sorted
-
-
-    }
 }

@@ -37,7 +37,7 @@ jobs:
     needs: [init-workflow]
 
   dsa-java-workflow:
-    # needs: [java-lint]
+    needs: [init-workflow]
     runs-on: ubuntu-latest
     steps:
       - run: echo "DSA Java workflow triggered by ${{ github.event_name }} event."

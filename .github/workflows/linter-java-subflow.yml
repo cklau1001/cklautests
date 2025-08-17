@@ -29,6 +29,11 @@ jobs:
           echo " "
           ls ${{ github.workspace }}/${{ inputs.checkout_path }}
 
+      - name: Prepare Super-Linter
+        run: |
+          cp -p ./${{ inputs.checkout_path }}/checkstyle.xml .            
+          cp -p ./${{ inputs.checkout_path }}/checkstyle-suppressions.xml .
+
       - name: Run Super-linter
         uses: super-linter/super-linter@v8.0.0
         env:

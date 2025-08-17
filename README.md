@@ -1,6 +1,5 @@
 [![Main workflow](https://github.com/cklau1001/cklautests/actions/workflows/main-flow.yml/badge.svg)](https://github.com/cklau1001/cklautests/actions/workflows/main-flow.yml)
 [![DSA Java workflow](https://github.com/cklau1001/cklautests/actions/workflows/dsa-java-flow.yml/badge.svg)](https://github.com/cklau1001/cklautests/actions/workflows/dsa-java-flow.yml)
-[![Coverage](.github/badges/jacoco.svg)](https://github.com/cklau1001/cklautests/actions/workflows/dsa-java-flow.yml)
 [![DSA Python workflow](https://github.com/cklau1001/cklautests/actions/workflows/dsa-python-flow.yml/badge.svg)](https://github.com/cklau1001/cklautests/actions/workflows/dsa-python-flow.yml)
 # Background
 The repository is set up to capture all cool stuff that I have learnt. Hopefully, it can also give you some insight when you are stuck during your technology journey.  :-)

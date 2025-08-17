@@ -42,7 +42,8 @@ jobs:
           DEFAULT_BRANCH: ${{ github.ref_name }}
           VALIDATE_JAVA: true
           JAVA_JVM_COMMAND_ARGS: -Dorg.checkstyle.sun.suppressionfilter.config=./${{ inputs.checkout_path }}/checkstyle-suppressionss.xml
-          JAVA_FILE_NAME: google_checks.xml
+          # JAVA_FILE_NAME: google_checks.xml
+          JAVA_FILE_NAME: checkstyle.xml
           LINTER_RULES_PATH: /
 
       - run: echo "Java linter status is ${{ job.status }}"

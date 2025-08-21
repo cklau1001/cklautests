@@ -1,7 +1,7 @@
 name: DSA Python workflow
 run-name: ${{ github.actor }}
 on:
-  pull_request:
+  # pull_request:
   push:
     paths:
       - dsa/python/**
@@ -39,6 +39,7 @@ jobs:
       pull-requests: write
       contents: write
       statuses: write
+      actions: read
     steps:
       - run: echo "DSA Python workflow triggered by ${{ github.event_name }} event."
       - run: echo "Runner=${{ runner.os }}, branch=${{ github.ref }}, repo=${{ github.repository }}"
@@ -71,13 +72,13 @@ jobs:
           coverage xml
           ls -alF
           coverage report -m
-      - name: Generate coverage report
-        uses: py-cov-action/python-coverage-comment-action@v3
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COVERAGE_PATH: ./${{ env.CHECKOUT_PATH }}
-          MINIMUM_GREEN: 90
-          SUBPROJECT_ID: dsa-python
-          ANNOTATE_MISSING_LINES: true
-          ANNOTATION_TYPE: error
+      # - name: Generate coverage report
+      #  uses: py-cov-action/python-coverage-comment-action@v3
+      #  with:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #    COVERAGE_PATH: ./${{ env.CHECKOUT_PATH }}
+      #    MINIMUM_GREEN: 90
+      #    SUBPROJECT_ID: dsa-python
+      #    ANNOTATE_MISSING_LINES: true
+      #    ANNOTATION_TYPE: error
       - run: echo "Job status is ${{ job.status }}"

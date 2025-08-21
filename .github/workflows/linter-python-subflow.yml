@@ -50,6 +50,7 @@ jobs:
           VALIDATE_PYTHON_PYLINT: true
           PYTHON_PYLINT_CONFIG_FILE: .pylintrc
           LINTER_RULES_PATH: /
+          FILTER_REGEX_EXCLUDE: (.*/tests/.*)
           LOG_LEVEL: INFO
 
       - run: echo "Python linter status is ${{ job.status }}"

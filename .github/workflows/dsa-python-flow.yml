@@ -78,5 +78,6 @@ jobs:
           COVERAGE_PATH: ./${{ env.CHECKOUT_PATH }}
           MINIMUM_GREEN: 90
           SUBPROJECT_ID: dsa-python
+          ANNOTATE_MISSING_LINES: true
           ANNOTATION_TYPE: error
       - run: echo "Job status is ${{ job.status }}"

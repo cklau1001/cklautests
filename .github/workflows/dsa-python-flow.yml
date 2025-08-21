@@ -32,9 +32,6 @@ jobs:
     needs: [init-workflow]
 
   dsa-python-workflow:
-    permissions:
-      statuses: write
-      contents: read
     needs: [init-workflow]
     runs-on: ubuntu-latest
     steps:
@@ -72,7 +69,7 @@ jobs:
       - name: Generate coverage report
         uses: py-cov-action/python-coverage-comment-action@v3
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           COVERAGE_PATH: ./${{ env.CHECKOUT_PATH }}
           MINIMUM_GREEN: 90
           SUBPROJECT_ID: dsa-python

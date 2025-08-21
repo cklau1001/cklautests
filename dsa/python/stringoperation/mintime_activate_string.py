@@ -1,8 +1,7 @@
 """
- To compute the minimum time to ensure that a string contains k sets of valid substrings
-
-  # 3639
- # https://leetcode.com/problems/minimum-time-to-activate-string/description/
+To compute the minimum time to ensure that a string contains k sets of valid substrings
+# 3639
+# https://leetcode.com/problems/minimum-time-to-activate-string/description/
 
 SortedList is a handy tool to provide a sorted list and locate left and right indexes
 
@@ -12,8 +11,8 @@ from sortedcontainers import SortedList
 
 class MinTimeToActivateString3639:
     """
-     A class to compute the minimum time to ensure that a string contains
-     k sets of valid substrings
+    A class to compute the minimum time to ensure that a string contains
+    k sets of valid substrings
     """
 
     def mintime(self, s: str, order: List[int] , k: int) -> int:
@@ -51,16 +50,3 @@ class MinTimeToActivateString3639:
             posmap.add(startpos)
 
         return -1
-
-# main
-
-if __name__ == '__main__':
-    mt: MinTimeToActivateString3639 = MinTimeToActivateString3639()
-    inputstring: str = "abc"
-    orderlist: List[int] = [1, 0, 2]
-    expectedk: int = 2
-    expected: int = 0
-
-    result: int = mt.mintime(inputstring, orderlist, expectedk)
-    print(f"s={inputstring}, order={orderlist}, k={expectedk}, result={result}, "
-          f"PASS={result == expected}")

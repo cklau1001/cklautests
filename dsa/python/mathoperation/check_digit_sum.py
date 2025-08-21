@@ -20,7 +20,7 @@ class CheckDigitSum:
         digit_sum, digit_product = 0, 1
 
         while temp > 0:
-            # divide: int = temp // 10
+
             mod: int = temp % 10
 
             digit_sum += mod
@@ -29,15 +29,3 @@ class CheckDigitSum:
             temp //= 10
 
         return n % (digit_sum + digit_product) == 0
-
-
-# main
-
-if __name__ == '__main__':
-
-    inputnum: int = 99
-    cs: CheckDigitSum = CheckDigitSum()
-
-    result: bool = cs.check_divisibility(inputnum)
-
-    print(f"input={inputnum}, result={result}")

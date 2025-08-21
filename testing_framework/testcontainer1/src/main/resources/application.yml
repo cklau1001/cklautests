@@ -9,7 +9,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/testdb1?schema=testdb1_schema
     username: postgres
-    password: <deleted>
+    password: # remove
     driverClassName: org.postgresql.Driver
 
   jpa:
@@ -22,3 +22,7 @@ logging:
     root: INFO
     com:
       example: INFO
+
+application:
+  weather:
+    url: # remove

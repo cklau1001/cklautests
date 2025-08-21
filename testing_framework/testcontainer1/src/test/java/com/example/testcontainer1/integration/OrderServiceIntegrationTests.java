@@ -1,7 +1,10 @@
 package com.example.testcontainer1.integration;
 
+import com.example.testcontainer1.dto.OrderItemDto;
+import com.example.testcontainer1.dto.PurchaseOrderDto;
 import com.example.testcontainer1.model.OrderItem;
 import com.example.testcontainer1.model.PurchaseOrder;
+import com.example.testcontainer1.repository.PurchaseOrderRepository;
 import com.example.testcontainer1.services.OrderService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +19,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import java.security.SecureRandom;
+import java.util.Optional;
 import java.util.function.Supplier;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -38,13 +42,13 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @Slf4j
 @Testcontainers
-@SpringBootTest
-public class OrderServiceIntegrationTests {
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+class OrderServiceIntegrationTests {
 
     private final String orderId = "PO-123-123";
-    private final String itemId = "ITEM-1";
+    private final String itemId = orderId + "_ITEM-1";
 
-    private static Supplier<String> randomStringGenerator = () -> {
+    private static final Supplier<String> randomStringGenerator = () -> {
         final String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         final int strLen = 8;
         SecureRandom sr = new SecureRandom();
@@ -65,10 +69,10 @@ public class OrderServiceIntegrationTests {
     @BeforeAll
     static void setup() {
 
+        postgreSQLContainer.start();
         String jdbcUrl = postgreSQLContainer.getJdbcUrl();
         String username = postgreSQLContainer.getUsername();
 
-        postgreSQLContainer.start();
         log.info("[setup]: PostgresSQL container started, jdbcUrl={}, username={}", jdbcUrl, username);
     }
 
@@ -82,30 +86,32 @@ public class OrderServiceIntegrationTests {
     @AfterAll
     static void tearDown() {
         postgreSQLContainer.stop();
-        log.info("[tearDown]: PostgresSQL container stopped");
+        log.info("[tearDown]: PostgreSQL container stopped");
     }
 
     @Autowired
     OrderService orderService;
 
+    @Autowired
+    PurchaseOrderRepository purchaseOrderRepository;
+
     @Test
-    public void testInit_success() {
+    void testInit_success() {
 
 
-        orderService.init(orderId);
-        PurchaseOrder po = orderService.getOrderById(orderId);
+        PurchaseOrderDto po = orderService.init(orderId);
 
         log.info("[testInit_success]: orderId={}", po.getOrderId());
         assertThat(po.getOrderId()).isEqualTo(orderId);
 
-        OrderItem orderItem = orderService.getItemById(itemId);
-        log.info("[testInit_success]: itemId={}", orderItem.getItemId());
-        assertThat(orderItem.getItemId()).isEqualTo(itemId);
+        OrderItemDto orderItemDto = po.getOrderItemDtoList().getFirst();
+        log.info("[testInit_success]: itemId={}", orderItemDto.getItemId());
+        assertThat(orderItemDto.getItemId()).isEqualTo(itemId);
 
     }
 
     @Test
-    public void testGetOrderFailed() {
+    void testGetOrderFailed() {
 
         EntityNotFoundException thrown = assertThrows(
                 EntityNotFoundException.class,
@@ -117,7 +123,7 @@ public class OrderServiceIntegrationTests {
     }
 
     @Test
-    public void testGetItemFailed() {
+    void testGetItemFailed() {
 
         EntityNotFoundException thrown = assertThrows(
                 EntityNotFoundException.class,
@@ -126,5 +132,13 @@ public class OrderServiceIntegrationTests {
         log.info("[testGetItemFailed]: errorMessage={}", thrown.getMessage());
         assertThat(thrown.getMessage()).startsWith("No such item=");
 
+    }
+
+    @Test
+    void testDeleteAllSuccess() {
+        orderService.init("dummyId");
+        orderService.deleteAll();
+
+        assertThat(purchaseOrderRepository.count()).isEqualTo(0);
     }
 }

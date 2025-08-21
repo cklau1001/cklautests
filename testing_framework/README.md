@@ -1,3 +1,2 @@
 # Introduction
-This directory contains simple tricks to perform testing by using mocking or test containers. 
-It will be very useful in any adoption of TDD practice.  
+This directory contains sample codes on using different techniques to write test cases from using Mockito, test containers to MockServer. Hopefully, it is helpful in any TDD practice.  

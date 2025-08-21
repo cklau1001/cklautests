@@ -53,6 +53,8 @@ jobs:
           ls ${{ github.workspace }}
           echo " "
           ls ${{ github.workspace }}/$CHECKOUT_PATH
+      - name: Disable sparse checkout
+        run: git sparse-checkout disable
       - name: Set up Python ${{ env.PYTHON_VERSION }}
         uses: actions/setup-python@v5
         with:
@@ -71,11 +73,11 @@ jobs:
           coverage xml
           ls -alF
           coverage report -m
-      # - name: Generate coverage report
-      #  uses: py-cov-action/python-coverage-comment-action@v3
-      #  with:
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #    COVERAGE_PATH: ./${{ env.CHECKOUT_PATH }}
-      #    MINIMUM_GREEN: 90
-      #    SUBPROJECT_ID: dsa-python
+      - name: Generate coverage report
+        uses: py-cov-action/python-coverage-comment-action@v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COVERAGE_PATH: ./${{ env.CHECKOUT_PATH }}
+          MINIMUM_GREEN: 90
+          SUBPROJECT_ID: dsa-python
       - run: echo "Job status is ${{ job.status }}"

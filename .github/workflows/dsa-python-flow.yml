@@ -53,6 +53,8 @@ jobs:
           ls ${{ github.workspace }}
           echo " "
           ls ${{ github.workspace }}/$CHECKOUT_PATH
+      - name: Disable sparse checkout
+        run: git sparse-checkout disable
       - name: Set up Python ${{ env.PYTHON_VERSION }}
         uses: actions/setup-python@v5
         with:

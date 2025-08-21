@@ -1,6 +1,7 @@
 name: DSA Python workflow
 run-name: ${{ github.actor }}
 on:
+  pull_request:
   push:
     paths:
       - dsa/python/**

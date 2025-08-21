@@ -34,6 +34,10 @@ jobs:
   dsa-python-workflow:
     needs: [init-workflow]
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+      statuses: write
     steps:
       - run: echo "DSA Python workflow triggered by ${{ github.event_name }} event."
       - run: echo "Runner=${{ runner.os }}, branch=${{ github.ref }}, repo=${{ github.repository }}"

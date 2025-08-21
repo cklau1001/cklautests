@@ -27,7 +27,7 @@ class ValidateCoupon:
         """
 
         valid_business_lines = ["electronics", "grocery", "pharmacy", "restaurant"]
-        pattern = re.compile(r'[^a-zA-Z0-9]+')
+        pattern = re.compile(r'[^a-zA-Z0-9_]+')
         templist = []
 
         # aggregates elements from multiple iterables
@@ -45,15 +45,3 @@ class ValidateCoupon:
         result = [sentry[0] for sentry in sorted(templist, key=lambda entry:(entry[1], entry[1]))]
 
         return result
-
-
-# main
-if __name__ == '__main__':
-    vc = ValidateCoupon()
-    test_code = ["TsCwKhY", "qCeVkfb", "ZGjX07H"] # expected: ["qCeVkfb","ZGjX07H","TsCwKhY"]
-    test_busline = ["restaurant", "electronics", "pharmacy"]
-    test_active = [True, True, True]
-
-
-    test_result = vc.validate_coupons(test_code, test_busline, test_active)
-    print(test_result)

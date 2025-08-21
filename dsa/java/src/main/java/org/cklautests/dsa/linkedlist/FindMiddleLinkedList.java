@@ -9,7 +9,7 @@ This shows how to use fast and slow pointers to get the middle of a linked list.
  */
 public class FindMiddleLinkedList {
 
-    private static class ListNode {
+    public static class ListNode {
         /**
          * The next node of the current node.
          */
@@ -28,9 +28,42 @@ public class FindMiddleLinkedList {
             this.next = inext;
         }
 
+        /**
+         * Return the value of this node.
+         *
+         * @return the value of this node
+         */
+        public int getVal() {
+            return val;
+        }
+
+        /**
+         * return the next node.
+         *
+         * @return the next node or null, if it reaches the end.
+         */
+        public ListNode getNext() {
+            return next;
+        }
+
+        /**
+         * Set the next node in the linked list.
+         *
+         * @param nextnode
+         */
+        public void setNext(ListNode nextnode) {
+            next = nextnode;
+        }
+
     } // class - ListNode
 
-    private ListNode middleNode(ListNode head) {
+    /**
+     * To find the middle node of a linked list.
+     *
+     * @param head - head of the linkedlist
+     * @return the node in the middle of a list
+     */
+    public ListNode middleNode(ListNode head) {
 
         ListNode fast = head;
         ListNode slow = head;
@@ -44,7 +77,13 @@ public class FindMiddleLinkedList {
         return slow;
     }
 
-    private ListNode detectCycle(ListNode head) {
+    /**
+     * To detect any cycle in a linked list.
+     *
+     * @param head - head of a linked list
+     * @return the node that forms a cycle in the list
+     */
+    public ListNode detectCycle(ListNode head) {
         /*
 
         142 - Floyd’s Cycle Detection Algorithm (Tortoise and Hare)
@@ -134,7 +173,7 @@ public class FindMiddleLinkedList {
      * @param headB - Second list
      * @return - the intersecting node of both lists
      */
-    private ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
 
         /*
  160
@@ -172,7 +211,13 @@ public class FindMiddleLinkedList {
         return nodeA;
     }
 
-    private void removeNthNodeFromEnd(ListNode head, int n) {
+    /**
+     * To remove the Nth node from the end of a linked list.
+     *
+     * @param head - head of a linked list
+     * @param n - the position from the end of a list
+     */
+    public void removeNthNodeFromEnd(ListNode head, int n) {
 
         /*
  https://leetcode.com/problems/remove-nth-node-from-end-of-list/description/
@@ -226,7 +271,12 @@ public class FindMiddleLinkedList {
         printNodes(head);
     }
 
-    private void swapTwoAdjacentNodes(ListNode head) {
+    /**
+     * To swap two adjacent nodes of a linked list.
+     *
+     * @param head - head of the linked list
+     */
+    public void swapTwoAdjacentNodes(ListNode head) {
 
         /*
 
@@ -248,6 +298,7 @@ public class FindMiddleLinkedList {
          */
 
         if (head == null || head.next == null) {
+            System.out.println("single node - SKIP");
             return;
         }
 
@@ -289,7 +340,12 @@ public class FindMiddleLinkedList {
 
     }
 
-    private void deleteDuplicatesSortedList(ListNode head) {
+    /**
+     * To delete duplicate nodes of a sorted linked list.
+     *
+     * @param head - head of the linked list
+     */
+    public void deleteDuplicatesSortedList(ListNode head) {
 
         /*
             case 1:  1 - 2 - 2 - 3 => 1 - 3
@@ -324,26 +380,15 @@ public class FindMiddleLinkedList {
                     head = currentNode.next;
                 }
 
-                if (prevNode.val == currentNode.val) {
-                   /* update head if
-                       2 - 2 - 2 - 3
-                                   H (new-pos)
-                    P -------> move to here (2)
-                               C
-                  */
-                    prevNode = currentNode;
-
-                } else {
-                   /* update head if
+                /* update head if
                        1 - 2 - 2 - 3
                        H
                     P.next-------> C.next(3)
                                C
-                  */
+                 */
 
-                    prevNode.next = currentNode.next;
-                    prevNode = currentNode;
-                }
+                prevNode.next = currentNode.next;
+                prevNode = currentNode;
 
                 duplicate = false;
 
@@ -377,99 +422,20 @@ public class FindMiddleLinkedList {
         System.out.printf("%n");
     }
 
-    private void testMiddleNode() {
-
-        ListNode node4 = new ListNode(4);
-        ListNode node3 = new ListNode(3, node4);
-        ListNode node2 = new ListNode(2, node3);
-        ListNode node1 = new ListNode(1, node2);
-
-        ListNode result = middleNode(node1);
-
-    }
-
-    private void testCycle() {
-
-        ListNode node4 = new ListNode(4);
-        ListNode node3 = new ListNode(3, node4);
-        ListNode node2 = new ListNode(2, node3);
-        ListNode node1 = new ListNode(1, node2);
-
-        node4.next = node1;
-
-        ListNode cycleNode = detectCycle(node1);
-        int cycleNodeValue = cycleNode != null ? cycleNode.val : -1;
-        System.out.println("cycleNode=" + cycleNodeValue);
-
-    }
-
-    private void testRotate() {
-
-        ListNode node5 = new ListNode(5);
-        ListNode node4 = new ListNode(4, node5);
-        ListNode node3 = new ListNode(3, node4);
-        ListNode node2 = new ListNode(2, node3);
-        ListNode node1 = new ListNode(1, node2);
-
-        rotateRight(node1, 1);
-
-    }
-
-    private void testIntersectionNode() {
-
-        ListNode node3 = new ListNode(3);    // intersection
-        ListNode node2 = new ListNode(2, node3);
-        ListNode node1 = new ListNode(1, node2);
-
-        ListNode node5 = new ListNode(5, node3);   // intersection
-        ListNode node4 = new ListNode(4, node5);
-
-        ListNode interNode = getIntersectionNode(node4, node1);
-
-    }
-
-    private void testSwapTwoAdjacentNodes() {
-
-        ListNode node5 = new ListNode(5);
-        ListNode node4 = new ListNode(4, node5);
-        ListNode node3 = new ListNode(3, node4);
-        ListNode node2 = new ListNode(2, node3);
-        ListNode node1 = new ListNode(1, node2);
-
-        swapTwoAdjacentNodes(node1);
-
-    }
-
-    private void testDeleteDuplicateSortedList() {
-
-        ListNode node4a3 = new ListNode(5);
-        ListNode node4a2 = new ListNode(4, node4a3);
-        ListNode node4a1 = new ListNode(4, node4a2);
-
-        ListNode node3 = new ListNode(3,  node4a1);
-        ListNode node2a2 = new ListNode(2, node3);
-        ListNode node2a1 = new ListNode(2, node2a2);
-        ListNode node1 = new ListNode(1, node2a1);
-
-        deleteDuplicatesSortedList(node1);
-
-    }
-
     /**
-     * entry point of the program.
+     * Count the size of the linked list.
      *
-     * @param arg - command line arguments
+     * @param head - head of the linked list
+     * @return the size of the linked list
      */
-    public static void main(String[] arg) {
+    public int size(ListNode head) {
+        int count = 0;
+        ListNode node = head;
+        while (node != null) {
+            count++;
+            node = node.next;
+        }
 
-        FindMiddleLinkedList fl = new FindMiddleLinkedList();
-
-        // fl.testMiddleNode();
-        // fl.testCycle();
-        // fl.testRotate();
-        // fl.testIntersectionNode();
-        // fl.testSwapTwoAdjacentNodes();
-        fl.testDeleteDuplicateSortedList();
-
+        return count;
     }
 }

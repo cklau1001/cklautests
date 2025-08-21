@@ -12,6 +12,7 @@ https://leetcode.com/problems/subsets/description/
 90 - subset with duplicate
 https://leetcode.com/problems/subsets-ii/description/
 
+
 39 - combination sum
 https://leetcode.com/problems/combination-sum/description/
 
@@ -246,24 +247,6 @@ i=5 (0x101) and j=2, 0x200) => 3   => shift 2 times of 1 to right => num[2] = 3
 
         runDFS2(nums, k, path, result);
 
-    }
-
-    /**
-     * The entry point of the program.
-     *
-     * @param args  - input argument
-     */
-    public static void main(String[] args) {
-
-        int[] input = new int[] {1, 2, 2};
-        List<List<Integer>> result;
-
-        Subset st = new Subset();
-        // result = st.subsetsByRec(input);
-        // result = st.subsetsByBit(input);
-        result = st.subsets2WithDup(input);
-
-        result.forEach(System.out::println);
     }
 
 }

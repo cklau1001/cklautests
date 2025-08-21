@@ -14,12 +14,30 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       checkout_path: ${{ steps.init_checkout_path.outputs.checkout_path }}
+      java_version: ${{ steps.init_java_version.outputs.java_version }}
+      java_vendor: ${{ steps.init_java_vendor.outputs.java_vendor }}
     steps:
       - name: Initialize CHECKOUT_PATH
         id: init_checkout_path
         run: echo "checkout_path=$CHECKOUT_PATH" >> $GITHUB_OUTPUT
+      - name: Initialize JAVA_VERSION
+        id: init_java_version
+        run: echo "java_version=$JAVA_VERSION" >> $GITHUB_OUTPUT
+      - name: Initialize JAVA_VENDOR
+        id: init_java_vendor
+        run: echo "java_vendor=$JAVA_VENDOR" >> $GITHUB_OUTPUT
+
+  java-lint:
+    permissions:
+      contents: read
+      statuses: write
+    uses: ./.github/workflows/linter-java-subflow.yml
+    with:
+      checkout_path: ${{ needs.init-workflow.outputs.checkout_path }}
+    needs: [init-workflow]
 
   dsa-java-workflow:
+    needs: [init-workflow]
     runs-on: ubuntu-latest
     steps:
       - run: echo "DSA Java workflow triggered by ${{ github.event_name }} event."
@@ -44,14 +62,10 @@ jobs:
       - run: java -version
       - name: Build with Maven
         working-directory: ./${{ env.CHECKOUT_PATH }}
-        run: mvn compile
-
-  java-lint:
-    permissions:
-      contents: read
-      statuses: write
-    uses: ./.github/workflows/linter-java-subflow.yml
-    with:
-      checkout_path: ${{ needs.init-workflow.outputs.checkout_path }}
-    needs: [init-workflow, dsa-java-workflow]
+        run: mvn verify
+      - name: Generate coverage report (Cicirello)
+        uses: cicirello/jacoco-badge-generator@v2.12.1
+        with:
+          jacoco-csv-file: ./${{ env.CHECKOUT_PATH }}/target/site/jacoco/jacoco.csv
+          generate-branches-badge: true
 

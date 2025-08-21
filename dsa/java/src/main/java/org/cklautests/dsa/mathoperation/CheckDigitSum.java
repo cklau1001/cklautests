@@ -16,7 +16,8 @@ public class CheckDigitSum {
      */
     public boolean checkDivisibilityByModus(int n) {
         /*
-        we try to get each digit by dividing n by 10 continuously.
+          we try to get each digit by dividing n by 10 continuously.
+          use primitive type to derive the answer, more efficient than standard approach.
 
         132 / 10 = 11; 132 % 10 = 2   => 2
            13 / 10 = 1; 13 % 10 = 3       3
@@ -66,22 +67,6 @@ public class CheckDigitSum {
 
         result = n % (digitSum + digitProduct) == 0;
         return result;
-
-    }
-
-    /**
-     * The entry point of the program.
-     *
-     * @param args - command line arguments.
-     */
-    public static void main(String[] args) {
-
-        CheckDigitSum cs = new CheckDigitSum();
-        int input = 99; // expected = true
-        boolean result = false;
-
-        result = cs.checkDivisibilityByModus(input);
-        System.out.printf("input=%s, result=%s", input, result);
 
     }
 

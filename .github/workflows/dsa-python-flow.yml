@@ -1,6 +1,7 @@
 name: DSA Python workflow
 run-name: ${{ github.actor }}
 on:
+  pull_request:
   push:
     paths:
       - dsa/python/**
@@ -22,8 +23,22 @@ jobs:
         id: init_version
         run: echo "python_version=$PYTHON_VERSION" >> $GITHUB_OUTPUT
 
+  python-lint:
+    permissions:
+      statuses: write
+      contents: read
+    uses: ./.github/workflows/linter-python-subflow.yml
+    with:
+      checkout_path: ${{ needs.init-workflow.outputs.checkout_path }}
+    needs: [init-workflow]
+
   dsa-python-workflow:
+    needs: [init-workflow]
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+      statuses: write
     steps:
       - run: echo "DSA Python workflow triggered by ${{ github.event_name }} event."
       - run: echo "Runner=${{ runner.os }}, branch=${{ github.ref }}, repo=${{ github.repository }}"
@@ -49,13 +64,20 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+      - name: Run tests with coverage
+        working-directory: ./${{ env.CHECKOUT_PATH }}
+        run: |
+          coverage run --omit="*/tests/*" --source=. -m unittest discover
+          coverage xml
+          ls -alF
+          coverage report -m
+      - name: Generate coverage report
+        uses: py-cov-action/python-coverage-comment-action@v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COVERAGE_PATH: ./${{ env.CHECKOUT_PATH }}
+          MINIMUM_GREEN: 90
+          SUBPROJECT_ID: dsa-python
+          ANNOTATE_MISSING_LINES: true
+          ANNOTATION_TYPE: error
       - run: echo "Job status is ${{ job.status }}"
-
-  python-lint:
-    permissions:
-      contents: write
-      issues: write
-    uses: ./.github/workflows/linter-python-subflow.yml
-    with:
-      checkout_path: ${{ needs.init-workflow.outputs.checkout_path }}
-    needs: [init-workflow, dsa-python-workflow]

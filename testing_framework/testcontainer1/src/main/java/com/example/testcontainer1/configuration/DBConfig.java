@@ -1,5 +1,6 @@
 package com.example.testcontainer1.configuration;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.AuditorAware;
@@ -20,4 +21,13 @@ public class DBConfig {
         return () -> Optional.of("currentUser");
     }
 
+    /*
+    @Value("${application.weather.url}")
+    private String internalWeatherUrl;
+
+    @Bean
+    public String weatherUrl() { return this.internalWeatherUrl; }
+
+
+     */
 }

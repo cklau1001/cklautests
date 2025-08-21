@@ -1,11 +1,13 @@
 package com.example.testcontainer1.unit;
 
+import com.example.testcontainer1.dto.PurchaseOrderDto;
 import com.example.testcontainer1.model.PurchaseOrder;
 import com.example.testcontainer1.repository.OrderItemRepository;
 import com.example.testcontainer1.repository.PurchaseOrderRepository;
 import com.example.testcontainer1.services.OrderService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.AbstractThrowableAssert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
@@ -14,6 +16,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -31,7 +35,7 @@ import static org.mockito.Mockito.*;
 
 @Slf4j
 @ExtendWith(MockitoExtension.class)
-public class OrderServiceUnitTests {
+class OrderServiceUnitTests {
 
     private final String orderId = "PO-123-123";
 
@@ -48,11 +52,10 @@ public class OrderServiceUnitTests {
     private ArgumentCaptor<PurchaseOrder> purchaseOrderArgumentCaptor;
 
     @Test
-    public void testInitSuccess() {
+    void testInitSuccess() {
 
-        PurchaseOrder dummyOrder = new PurchaseOrder();
+        when(mockPurchaseOrderRepository.findByOrderIdAsDTOMap(anyString())).thenReturn(List.of(new HashMap<>()));
         orderService.init(orderId);
-
         verify(mockPurchaseOrderRepository, times(1)).save(purchaseOrderArgumentCaptor.capture());
 
         log.info("orderId={}", purchaseOrderArgumentCaptor.getValue().getOrderId());
@@ -61,10 +64,9 @@ public class OrderServiceUnitTests {
     }
 
     @Test
-    public void testGetOrderByIdFailed() {
+    void testGetOrderByIdFailed() {
 
-        when(mockPurchaseOrderRepository.findById(anyString())).thenReturn(Optional.empty());
-
+        when(mockPurchaseOrderRepository.findByOrderIdAsDTOMap(anyString())).thenReturn(List.of());
         EntityNotFoundException thrown = assertThrows(
                 EntityNotFoundException.class,
                 () -> orderService.getOrderById("INVALID_ORDER_ID")
@@ -75,10 +77,9 @@ public class OrderServiceUnitTests {
     }
 
     @Test
-    public void testGetItemByIdFailed() {
+    void testGetItemByIdFailed() {
 
-        when(mockOrderItemRepository.findById(anyString())).thenReturn(Optional.empty());
-
+        when(mockOrderItemRepository.findByItemIdAsDTO(anyString())).thenReturn(Optional.empty());
         EntityNotFoundException thrown = assertThrows(
                 EntityNotFoundException.class,
                 () -> orderService.getItemById("INVALID_ITEM_ID")
@@ -86,6 +87,7 @@ public class OrderServiceUnitTests {
 
         log.info("[testGetItemByIdFailed]: error={}", thrown.getMessage());
         assertThat(thrown.getMessage()).startsWith("No such item=");
+
     }
 
 }

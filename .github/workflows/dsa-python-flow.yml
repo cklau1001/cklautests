@@ -65,4 +65,11 @@ jobs:
           coverage run --omit="*/tests/*" --source=. -m unittest discover
           coverage xml
           ls -alF
+          coverage report -m
+      - name: Generate coverage report
+        uses: orgoro/coverage#v3.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          coverageFile: ./${{ env.CHECKOUT_PATH }}/coverage.xml
+          sourceDir: ./${{ env.CHECKOUT_PATH }}
       - run: echo "Job status is ${{ job.status }}"

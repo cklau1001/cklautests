@@ -1,0 +1,1 @@
+This is a folder to capture all materials relating to managing a container / kubernetes. 

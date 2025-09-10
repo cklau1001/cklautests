@@ -1,6 +1,6 @@
 # Problem statement
 Cloud native buildpack (CNB) has great potential in terms of compliance and image optimization. SpringBoot has default support on that with layered jars. 
-However, there is also a learning curve when dealing with some common but tricky scenario. One of them is to add extra OS utilities to an image from CNB.
+However, there is also a learning curve when dealing with some customization scenarios. One of them is to add extra OS utilities to an image from CNB.
 
 Generally, there are two approaches to tackle this problem.
 1. Add the required OS utilities to the final image built by CNB as mentioned by [Stackover overflow link](https://stackoverflow.com/questions/62484649/how-to-add-extra-linux-dependencies-into-a-spring-boot-buildpack-image)
@@ -9,10 +9,11 @@ In fact, this approach can be further refined by leveraging custom buildpack and
 
 The creation of a custom builder is not very complicated as one may initially imagine. In this sample, the original 
 builder-jammy-base builder is taken as a reference and only the native java buildpacks are 
-included with the custom run image, which is configured in the builder.toml.
+included with the custom run image, which is configured in the **builder.toml**.
 
 # Pre-requisite
 - a docker registry to store the custom builder and run image, e.g. a repository in docker hub
+- a docker daemon on your build server
 - the pack cli to create the custom builder
 
 # Integrating into pom.xml of maven

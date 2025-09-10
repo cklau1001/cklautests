@@ -1,0 +1,39 @@
+description = "Custom Java builder"
+
+[[buildpacks]]
+uri = "docker://docker.io/paketobuildpacks/java-native-image:11.16.0"
+version = "11.16.0"
+
+[[buildpacks]]
+uri = "docker://docker.io/paketobuildpacks/java:18.13.0"
+version = "18.13.0"
+
+[lifecycle]
+version = "0.20.12"
+
+[build]
+image = "docker.io/paketobuildpacks/build-jammy-base:0.1.168"
+[run]
+[[run.images]]
+image = "<location of custom run image>"
+
+[[order]]
+
+# only include java buildpacks for springboot application
+[[order.group]]
+id = "paketo-buildpacks/java-native-image"
+version = "11.16.0"
+
+[[order]]
+
+[[order.group]]
+id = "paketo-buildpacks/java"
+version = "18.13.0"
+
+[[targets]]
+arch = "amd64"
+os = "linux"
+
+[[targets]]
+arch = "arm64"
+os = "linux"

@@ -8,9 +8,9 @@ It is organized as a monorepo with the sample codes written in different program
 :smile:
 
 # Directory Structure
-```shell
-<root>/
-         dsa/     # java / python codes for different algorithm problems
-         testing_framework/   # sample codes to perform unit and integration testing using popular tools e.g. Mockito / TestContainers
-         web3/  # simple codes to play around web3, e.g. smart contract  
-```
+It contains the following sub-directories.
+- [basic algorithms or data structures to solve common problems](./dsa)
+- [managing containers](./container)
+- [testing approaches](./testing_framework)
+- [web3 related stuff](./web3)
+

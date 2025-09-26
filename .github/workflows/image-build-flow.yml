@@ -50,3 +50,5 @@ jobs:
           distribution: ${{ env.JAVA_VENDOR }}
           cache: maven
       - run: java -version
+      - name: Test secret
+        run: echo ${{ secrets.DOCKER_USERNAME }}

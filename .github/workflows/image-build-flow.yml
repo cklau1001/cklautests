@@ -50,5 +50,6 @@ jobs:
           distribution: ${{ env.JAVA_VENDOR }}
           cache: maven
       - run: java -version
-      - name: Test secret
-        run: echo ${{ secrets.DOCKER_USERNAME }}
+      - name: Build the application
+        run: mvn spring-boot:build-image -D=docker_username=${{ secrets.DOCKER_USERNAME }} -D=docker_password=${{ secrets.DOCKER_PASSWORD }}
+

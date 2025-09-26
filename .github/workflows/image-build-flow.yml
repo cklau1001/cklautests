@@ -26,11 +26,11 @@ jobs:
       - name: Initialize JAVA_VENDOR
         id: init_java_vendor
         run: echo "java_vendor=$JAVA_VENDOR" >> $GITHUB_OUTPUT
-  dsa-java-workflow:
+  build-spring-image-workflow:
     needs: [init-workflow]
     runs-on: ubuntu-latest
     steps:
-      - run: echo "DSA Java workflow triggered by ${{ github.event_name }} event."
+      - run: echo "Spring image workflow triggered by ${{ github.event_name }} event."
       - run: echo "Runner=${{ runner.os }}, branch=${{ github.ref }}, repo=${{ github.repository }}"
       - name: Check out code on ${{ env.CHECKOUT_PATH }}
         uses: actions/checkout@v4
@@ -51,5 +51,6 @@ jobs:
           cache: maven
       - run: java -version
       - name: Build the application
+        working-directory: ./${{ env.CHECKOUT_PATH }}
         run: mvn spring-boot:build-image -D=docker_username=${{ secrets.DOCKER_USERNAME }} -D=docker_password=${{ secrets.DOCKER_PASSWORD }}
 

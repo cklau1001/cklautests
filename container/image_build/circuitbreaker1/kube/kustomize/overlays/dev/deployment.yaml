@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: circutbreaker1-deployment
+  labels:
+    app: circuitbreaker1
+spec:
+  replicas: 1
+  template:
+    spec:
+      containers:
+        - name: circuitbreaker1-container
+          image: TO_BE_SET
+          # env:
+          #  - name: SPRING_PROFILES_ACTIVE
+          #    value: "local"
+          # - name: nginx
+          # image: nginx:latest
+          #  image: cklau1001/repo1:ngxlatest
+          ports:
+            - containerPort: 8083
+      imagePullSecrets:
+        - name: repo1-logon

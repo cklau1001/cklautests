@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>3.4.6</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>io.cklau1001</groupId>
+	<artifactId>circuitbreaker1</artifactId>
+	<version>1.0.0</version>
+	<name>circuitbreaker</name>
+	<description>Test Circuit Breaker</description>
+	<url/>
+	<licenses>
+		<license/>
+	</licenses>
+	<developers>
+		<developer/>
+	</developers>
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
+	<properties>
+		<!-- <java.version>24</java.version> -->
+		<!-- default environment to use, which is local
+		   invoke maven as below
+		   mvn spring-boot:run -Dtest-profiles=prod
+		-->
+		<test.profiles>default</test.profiles>
+		<maven.compiler.source>24</maven.compiler.source>
+		<maven.compiler.target>24</maven.compiler.target>
+		<spring-cloud.version>2024.0.1</spring-cloud.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<!-- Need both AOP and resilience4j to set up circuit breaker -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-circuitbreaker-resilience4j</artifactId>
+		</dependency>
+
+		<!-- declarative approach to call REST call by Feign -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+
+		<!-- manage kubernetes secret -->
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bootstrap</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-kubernetes-fabric8-config</artifactId>
+		</dependency>
+		<!--
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-kubernetes-client-config</artifactId>
+		</dependency>
+		-->
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>1.6.3</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<!-- <optional>true</optional> -->
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.8.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<!-- To use with Feign -->
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<skip>false</skip>
+					<systemPropertyVariables>
+					   <env>local</env>
+					</systemPropertyVariables>
+					<!--
+					<jvmArguments>
+						-Dspring.profiles.active=${testprofiles}
+					</jvmArguments>
+					-->
+					<!-- for building images using cloud native buildpack
+					    reference: https://github.com/paketo-buildpacks/image-labels
+					-->
+					<docker>
+						<builderRegistry>
+							<username>${docker_username}</username>
+							<password>${docker_password}</password>
+						</builderRegistry>
+						<publishRegistry>
+							<username>${docker_username}</username>
+							<password>${docker_password}</password>
+							<!-- <url>https://index.docker.io/v1/</url> -->
+						</publishRegistry>
+					</docker>
+					<image>
+						<publish>true</publish>
+						<name>docker.io/cklau1001/repo1:circuitbreaker1</name>
+						<!-- <builder>paketobuildpacks/builder-jammy-base</builder> -->
+						<builder>cklau1001/repo1:javabuilder1</builder>
+						<env>
+							<BP_OCI_AUTHORS>tester1</BP_OCI_AUTHORS>
+							<BP_OCI_SOURCE>cklau1001</BP_OCI_SOURCE>
+							<BP_IMAGE_LABELS>
+								io.cklau1001.app=circuitbreaker io.cklau1001.jdk=24
+							</BP_IMAGE_LABELS>
+							<BPE_DEFAULT_SPRING_PROFILES_ACTIVE>${testprofiles}</BPE_DEFAULT_SPRING_PROFILES_ACTIVE>
+							<BP_JVM_VERSION>24</BP_JVM_VERSION>
+							<BPE_LANG>en_US.UTF-8</BPE_LANG>
+						</env>
+					</image>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>1.18.38</version>
+						</path>
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>1.6.3</version>
+						</path>
+					</annotationProcessorPaths>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+
+</project>

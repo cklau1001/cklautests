@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: circutbreaker1-deployment
+  namespace: nsdev1
+  labels:
+    app: circuitbreaker1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: circuitbreaker1
+  template:
+    metadata:
+      labels:
+        app: circuitbreaker1
+    spec:
+      containers:
+      - name: circuitbreaker1-container
+        image: cklau1001/repo1:circuitbreaker1
+        env:
+        - name: SPRING_PROFILES_ACTIVE
+          value: "local"
+      # - name: nginx
+        # image: nginx:latest
+      #  image: cklau1001/repo1:ngxlatest
+        ports:
+        - containerPort: 8083
+        volumeMounts:
+        - name: secret1-volume
+          mountPath: "/etc/secret"
+          readOnly: true
+      imagePullSecrets:
+      - name: repo1-logon
+      volumes:
+      - name: secret1-volume
+        secret:
+          secretName: secret1

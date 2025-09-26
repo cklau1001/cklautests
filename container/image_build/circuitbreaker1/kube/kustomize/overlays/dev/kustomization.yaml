@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../base
+- namespace.yaml
+namespace: nsdev1
+
+patches:
+- path: deployment.yaml
+- path: service.yaml
+
+configMapGenerator:
+  - name: app-env-config
+    envs:
+      - app.env
+generatorOptions:
+  disableNameSuffixHash: true
+
+# set image tag by
+#  kustomize edit set image 'TO_BE_SET=cklau1001/repo1:circuitbreaker1'
+images:
+- name: TO_BE_SET
+  newName: cklau1001/repo1
+  newTag: circuitbreaker1

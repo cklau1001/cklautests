@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: circuitbreaker1-service
+  namespace: nsdev1
+spec:
+  selector:
+    app: circuitbreaker1
+  type: LoadBalancer
+  ports:
+    - port: 8083
+      targetPort: 8083
+      protocol: TCP

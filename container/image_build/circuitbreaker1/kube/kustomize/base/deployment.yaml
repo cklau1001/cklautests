@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: circutbreaker1-deployment
+  labels:
+    app: circuitbreaker1
+spec:
+  selector:
+    matchLabels:
+      app: circuitbreaker1
+  template:
+    metadata:
+      labels:
+        app: circuitbreaker1
+    spec:
+      containers:
+        - name: circuitbreaker1-container
+          image: TO_BE_SET
+          envFrom:
+            - configMapRef:
+                name: app-env-config
+          volumeMounts:
+            - name: secret1-volume
+              mountPath: "/etc/secret"
+              readOnly: true
+      imagePullSecrets:
+        - name: repo1-logon
+      volumes:
+        - name: secret1-volume
+          secret:
+            secretName: secret1

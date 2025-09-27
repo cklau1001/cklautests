@@ -1,0 +1,57 @@
+name: Image build workflow
+run-name: ${{ github.actor }}
+on:
+  push:
+    paths:
+      - container/image_build/circuitbreaker1/**
+env:
+  CHECKOUT_PATH: 'container/image_build/circuitbreaker1'
+  JAVA_VERSION: '24'
+  JAVA_VENDOR: 'oracle'
+  DOCKER_PUSH: ${{ github.ref == 'refs/heads/main' && 'true' || 'false' }}
+
+jobs:
+  init-workflow:
+    runs-on: ubuntu-latest
+    outputs:
+      checkout_path: ${{ steps.init_checkout_path.outputs.checkout_path }}
+      java_version: ${{ steps.init_java_version.outputs.java_version }}
+      java_vendor: ${{ steps.init_java_vendor.outputs.java_vendor }}
+    steps:
+      - name: Initialize CHECKOUT_PATH
+        id: init_checkout_path
+        run: echo "checkout_path=$CHECKOUT_PATH" >> $GITHUB_OUTPUT
+      - name: Initialize JAVA_VERSION
+        id: init_java_version
+        run: echo "java_version=$JAVA_VERSION" >> $GITHUB_OUTPUT
+      - name: Initialize JAVA_VENDOR
+        id: init_java_vendor
+        run: echo "java_vendor=$JAVA_VENDOR" >> $GITHUB_OUTPUT
+  build-spring-image-workflow:
+    needs: [init-workflow]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Spring image workflow triggered by ${{ github.event_name }} event."
+      - run: echo "Runner=${{ runner.os }}, branch=${{ github.ref }}, repo=${{ github.repository }}"
+      - name: Check out code on ${{ env.CHECKOUT_PATH }}
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: ${{ env.CHECKOUT_PATH }}
+          sparse-checkout-cone-mode: false
+      - run: echo "Code checked out"
+      - name: Listing files
+        run: |
+          ls ${{ github.workspace }}
+          echo " "
+          ls ${{ github.workspace }}/$CHECKOUT_PATH
+      - name: Set up JDK 24
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ env.JAVA_VERSION }}
+          distribution: ${{ env.JAVA_VENDOR }}
+          cache: maven
+      - run: java -version
+      - name: Build the application
+        working-directory: ./${{ env.CHECKOUT_PATH }}
+        run: mvn spring-boot:build-image -D=docker_username=${{ secrets.DOCKER_USERNAME }} -D=docker_password=${{ secrets.DOCKER_PASSWORD }}
+

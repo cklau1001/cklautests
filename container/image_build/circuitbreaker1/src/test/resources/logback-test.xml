@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds">
+
+    <!-- Console appender for test output -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File appender for test logs (optional) -->
+    <!--
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>target/test-logs/test.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+-->
+    <!-- Typically more verbose logging for tests -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <!-- Uncomment if you want test logs in file too -->
+        <!-- <appender-ref ref="FILE"/> -->
+    </root>
+
+    <!-- Special configurations for specific packages -->
+    <logger name="com.spring1.activemq1.messaging" level="DEBUG"/>
+
+
+    <!-- For JUnit test output -->
+    <logger name="org.junit" level="INFO"/>
+</configuration>

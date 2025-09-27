@@ -1,0 +1,106 @@
+spring:
+  application:
+    name: test
+
+# H2 database
+#  https://www.baeldung.com/spring-boot-h2-database
+#
+#  datasource:
+#    url: jdbc:h2:file:~/h2data/testdb1
+# spring.datasource.url=jdbc:h2:file:/data/testdb  # File-based db
+#    driverClassName: org.h2.Driver
+#    username: sa
+#    password: password
+
+  # jpa:
+  #  database-platform: org.hibernate.dialect.H2Dialect
+# H2 console - http://localhost:8080/h2-console
+
+  # h2:
+  #  console:
+  #    enabled: true
+# spring.sql.init.data-locations=import_*_users.sql
+
+# Lazy loading of beans
+  main:
+    lazy-initialization: true  # save 200 ms
+    allow-bean-definition-overriding: true
+
+  config:
+  #  import: optional:configtree:/etc/secret/
+    import: "optional:kubernetes:"
+
+  #
+  # https://docs.spring.io/spring-cloud-kubernetes/reference/property-source-config/secrets-propertysource.html
+  # spring cloud expects configMap and secret name the same as the spring.application.name
+  # The service account can query the target kube resources ( configmaps, secrets, etc )
+  # It also creates a kubernetes profile that one can customize
+  #
+  cloud:
+    kubernetes:
+#      config:
+#        enabled: true
+#        name: app-env
+#        sources:
+#          name: app-env
+      secrets:
+        enabled: true
+        paths:
+         - /etc/secret
+
+
+# Prometheus integration - https://www.baeldung.com/spring-boot-prometheus
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+    health:
+      show-details: always
+
+# Resilienc4j - https://medium.com/@mustafa_ciminli/implementing-circuit-breaker-with-resilience4j-in-spring-boot-fe8cc9b43e89
+#  https://resilience4j.readme.io/docs/circuitbreaker
+#
+resilience4j:
+  circuitbreaker:
+    instances:
+      studentService:
+        failure-rate-threshold: 100   # in percentage
+        minimum-number-of-calls: 3
+        automatic-transition-from-open-to-half-open-enabled: true
+        wait-duration-in-open-state: 5s
+        permitted-number-of-calls-in-half-open-state: 3
+        sliding-window-size: 5
+        sliding-window-type: count_based
+  retry:
+    instances:
+      studentRetryService:
+        max-attempts: 3
+        wait-duration: 1s
+        metrics:
+          legacy:
+            enabled: true
+          enabled: true
+
+
+# org.springframework.data.mongodb
+# logging.level.org.springframework.boot.autoconfigure=DEBUG  ## analyze the auto-config classes
+
+logging:
+  level:
+    root: INFO
+    com:
+      spring1:
+        activemq1:
+          messaging: INFO
+    org:
+      springframework:
+        data:
+          auditing: INFO
+        transaction: INFO
+        scheduling: INFO
+        cloud:
+          kubernetes: DEBUG
+    io:
+      github: INFO
+      fabric8: DEBUG

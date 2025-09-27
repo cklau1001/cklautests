@@ -159,7 +159,7 @@
 						<!-- <builder>paketobuildpacks/builder-jammy-base</builder> -->
 						<builder>cklau1001/repo1:javabuilder1</builder>
 						<env>
-							<BP_OCI_AUTHORS>tester1</BP_OCI_AUTHORS>
+							<BP_OCI_AUTHORS>cklau1001</BP_OCI_AUTHORS>
 							<BP_OCI_SOURCE>cklau1001</BP_OCI_SOURCE>
 							<BP_IMAGE_LABELS>
 								io.cklau1001.app=circuitbreaker io.cklau1001.jdk=24

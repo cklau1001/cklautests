@@ -8,7 +8,7 @@ env:
   CHECKOUT_PATH: 'container/image_build/circuitbreaker1'
   JAVA_VERSION: '24'
   JAVA_VENDOR: 'oracle'
-  DOCKER_PUSH: ${{ github.ref == 'refs/heads/main' && 'true' || 'true' }}
+  DOCKER_PUSH: ${{ github.ref == 'refs/heads/main' && 'true' || '' }}
 
 jobs:
   init-workflow:

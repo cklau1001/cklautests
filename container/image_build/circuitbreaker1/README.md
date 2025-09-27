@@ -8,7 +8,7 @@ This project serves to provide a simple example to achieve that. It consists of 
 - Enable circuit breaker by resilience4j
 - Retrieve sensitive information from Kubenetes secret by Spring Kubernetes
 
-The build process creates a docker image using a custom CNB buildpack created in [custom_builder](../../CNB/custom_builder) from a private repository using Github serects. 
+The build process creates a docker image using a custom CNB buildpack created in [custom_builder](../../CNB/custom_builder) from a private repository using Github secrets. 
 The process builds the image for all branches but only pushes a new image only for **main** branch. 
 It can show how to achieve that in a github action.
 

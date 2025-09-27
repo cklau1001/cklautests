@@ -1,14 +1,14 @@
 [![Image build workflow](https://github.com/cklau1001/cklautests/actions/workflows/image-build-flow.yml/badge.svg)](https://github.com/cklau1001/cklautests/actions/workflows/image-build-flow.yml)
 [![Pushed to Docker Hub](https://img.shields.io/badge/docker_hub-released-blue.svg?logo=docker)](https://github.com/cklau1001/cklautests/actions/workflows/image-build-flow.yml)
 
-# Introduction
-
-This is a spring cloud application that demostrates the following useful components.
+# Problem statement
+Setting up a Spring cloud application consists of a number of steps, particularly if the automatic build and image push by CI/CD pipeline is needed.
+This project serves to provide a simple example to achieve that. It consists of the following useful components.
 - Fetch downstream information by Feign
 - Enable circuit breaker by resilience4j
 - Retrieve sensitive information from Kubenetes secret by Spring Kubernetes
 
-The build process creates a docker image using a custom CNB buildpack created in [custom_builder](../CNB/custom_builder) from a private repository using Github serects. 
+The build process creates a docker image using a custom CNB buildpack created in [custom_builder](../../CNB/custom_builder) from a private repository using Github serects. 
 The process builds the image for all branches but only pushes a new image only for **main** branch. 
 It can show how to achieve that in a github action.
 

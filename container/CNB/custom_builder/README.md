@@ -11,6 +11,8 @@ The creation of a custom builder is not very complicated as one may initially im
 builder-jammy-base builder is taken as a reference and only the native java buildpacks are 
 included with the custom run image, which is configured in the **builder.toml**.
 
+This custom buildpack is used by [Spring app image build](../../image_build/circuitbreaker1) also.
+
 # Pre-requisite
 - a docker registry to store the custom builder and run image, e.g. a repository in docker hub
 - a docker daemon on your build server

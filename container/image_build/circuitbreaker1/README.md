@@ -1,3 +1,4 @@
+[![Image build workflow](https://github.com/cklau1001/cklautests/actions/workflows/dsa-python-flow.yml/badge.svg)](https://github.com/cklau1001/cklautests/actions/workflows/image-build-flow.yml)
 [![Pushed to Docker Hub](https://img.shields.io/badge/docker_hub-released-blue.svg?logo=docker)](https://github.com/cklau1001/cklautests/actions/workflows/image-build-flow.yml)
 
 # Introduction

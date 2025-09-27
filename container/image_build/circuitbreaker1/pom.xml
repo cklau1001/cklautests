@@ -154,7 +154,7 @@
 						</publishRegistry>
 					</docker>
 					<image>
-						<publish>false</publish>
+						<publish>${env.DOCKER_PUSH}</publish>
 						<name>docker.io/cklau1001/repo1:circuitbreaker1</name>
 						<!-- <builder>paketobuildpacks/builder-jammy-base</builder> -->
 						<builder>cklau1001/repo1:javabuilder1</builder>

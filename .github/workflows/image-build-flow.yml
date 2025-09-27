@@ -53,7 +53,5 @@ jobs:
       - run: java -version
       - name: Build the application
         working-directory: ./${{ env.CHECKOUT_PATH }}
-        run: |
-          mvn spring-boot:build-image -Dspring-boot.build-image.publish=${{ env.DOCKER_PUSH }} \
-          -D=docker_username=${{ secrets.DOCKER_USERNAME }} -D=docker_password=${{ secrets.DOCKER_PASSWORD }}
+        run: mvn spring-boot:build-image -D=docker_username=${{ secrets.DOCKER_USERNAME }} -D=docker_password=${{ secrets.DOCKER_PASSWORD }}
 

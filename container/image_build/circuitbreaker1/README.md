@@ -8,7 +8,7 @@ This is a spring cloud application that demostrates the following useful compone
 - Enable circuit breaker by resilience4j
 - Retrieve sensitive information from Kubenetes secret by Spring Kubernetes
 
-The build process creates a docker image using a custom CNB buildpack from a private repository using Github serects. 
+The build process creates a docker image using a custom CNB buildpack created in [custom_builder](../CNB/custom_builder) from a private repository using Github serects. 
 The process builds the image for all branches but only pushes a new image only for **main** branch. 
 It can show how to achieve that in a github action.
 

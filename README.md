@@ -12,6 +12,7 @@ It is organized as a monorepo with the sample codes written in different program
 # Directory Structure
 It contains the following sub-directories.
 - [basic algorithms or data structures to solve common problems](./dsa)
+- [sample data manipulation scripts by Pandas](./dsa/pandas)
 - [managing containers](./container)
 - [testing approaches](./testing_framework)
 - [web3 related stuff](./web3)

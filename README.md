@@ -16,4 +16,5 @@ It contains the following sub-directories.
 - [managing containers](./container)
 - [testing approaches](./testing_framework)
 - [web3 related stuff](./web3)
+- [Full-Stack application showing how React frontend interacts with Springboot RESTful endpoints with JWT token that connects to different microservices including an AI-enabled sentimental analyzer](https://github.com/cklau1001/xrwvm-fullstack_developer_capstone/tree/feature/sboot1)
 

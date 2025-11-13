@@ -16,5 +16,5 @@ It contains the following sub-directories.
 - [managing containers](./container)
 - [testing approaches](./testing_framework)
 - [web3 related stuff](./web3)
-- [An AI-enabled sentimental analysis full-stack application](https://github.com/cklau1001/xrwvm-fullstack_developer_capstone/tree/feature/sboot1)
+- [An AI-enabled sentimental analysis full-stack application](https://github.com/cklau1001/xrwvm-fullstack_developer_capstone)
 

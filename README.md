@@ -17,4 +17,5 @@ It contains the following sub-directories.
 - [testing approaches](./testing_framework)
 - [web3 related stuff](./web3)
 - [An AI-enabled sentimental analysis full-stack application](https://github.com/cklau1001/xrwvm-fullstack_developer_capstone)
+- [A generic workflow engine with OpenTelemetry enabled](https://github.com/cklau1001/workflowEngine)
 

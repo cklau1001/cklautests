@@ -18,4 +18,5 @@ It contains the following sub-directories.
 - [web3 related stuff](./web3)
 - [An AI-enabled sentimental analysis full-stack application](https://github.com/cklau1001/xrwvm-fullstack_developer_capstone)
 - [A generic workflow engine with OpenTelemetry enabled](https://github.com/cklau1001/workflowEngine)
+- [A python FastAPI application leveraging python asycio and OpenTelemetry](https://github.com/cklau1001/fastapi2)
 

@@ -17,6 +17,7 @@ It contains the following sub-directories.
 - [testing approaches](./testing_framework)
 - [web3 related stuff](./web3)
 - [An AI-enabled sentimental analysis full-stack application](https://github.com/cklau1001/xrwvm-fullstack_developer_capstone)
+- [An event-driven system to manage portfolio using Kafka with Inbox and Outbox patterns](https://github.com/cklau1001/pms1)
 - [A generic workflow engine with OpenTelemetry enabled](https://github.com/cklau1001/workflowEngine)
 - [A python FastAPI application leveraging python asycio and OpenTelemetry](https://github.com/cklau1001/fastapi2)
 
